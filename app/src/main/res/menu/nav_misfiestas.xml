@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_misfiestas"
+        android:enabled="true"
+        android:icon="@mipmap/ic_launcher"
+        android:title="@string/mis_fiestas"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_nuevafiesta"
+        android:enabled="true"
+        android:icon="@mipmap/ic_action_add_circle"
+        android:title="@string/nueva_fiesta"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_notificaciones"
+        android:enabled="true"
+        android:icon="@mipmap/ic_action_notifications"
+        android:title="@string/notificaciones"
+        app:showAsAction="ifRoom" />
+</menu>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:customAttrs="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/card_view"
+    android:layout_marginBottom="@dimen/between_cards"
+    android:layout_width="match_parent"
+    android:layout_height="70dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/imgFiesta"
+            android:layout_height="50dp"
+            android:layout_width="50dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/padding_text"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <com.mint.fiestapp.views.controls.CustomTextView
+                android:id="@+id/texNombre"
+                customAttrs:customFont="UBUNTU_NORMAL"
+                android:maxLines="1"
+                android:textStyle="bold"
+                android:textColor="@color/titles"
+                android:textSize="16sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </com.mint.fiestapp.views.controls.CustomTextView>
+
+            <com.mint.fiestapp.views.controls.CustomTextView
+                android:id="@+id/texDetalle"
+                customAttrs:customFont="UBUNTU_REGULAR"
+                android:maxLines="1"
+                android:textColor="@color/subtitles"
+                android:textSize="12sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </com.mint.fiestapp.views.controls.CustomTextView>
+
+        </LinearLayout>
+    </LinearLayout>
+</android.support.v7.widget.CardView>
