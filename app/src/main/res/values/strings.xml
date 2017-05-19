@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Fiestapp</string>
+
+    <!-- MIS FIESTAS -->
+    <string name="mis_fiestas">Fiestas</string>
+    <string name="notificaciones">Notificaciones</string>
+    <string name="nueva_fiesta">Nueva fiesta</string>
+
+    <!-- FIESTA -->
+    <string name="dias_faltantes">DÍAS</string>
+    <string name="invitados">INVITADOS</string>
+    <string name="fotos">FOTOS</string>
+    <string name="grid_fotos">Fotos</string>
+    <string name="grid_me_gustas">¡Me gustás!</string>
+    <string name="grid_menu">Menú</string>
+    <string name="grid_musica">Música</string>
+</resources>
