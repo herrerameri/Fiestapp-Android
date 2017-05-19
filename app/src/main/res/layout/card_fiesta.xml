@@ -10,6 +10,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:padding="@dimen/padding_text"
         android:orientation="horizontal">
 
         <ImageView
@@ -20,11 +22,11 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="@dimen/padding_text"
             android:gravity="center_vertical"
+            android:paddingLeft="@dimen/padding_text"
             android:orientation="vertical">
 
-            <com.mint.fiestapp.views.controls.CustomTextView
+            <com.mint.fiestapp.views.custom.CustomTextView
                 android:id="@+id/texNombre"
                 customAttrs:customFont="UBUNTU_NORMAL"
                 android:maxLines="1"
@@ -33,9 +35,9 @@
                 android:textSize="16sp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-            </com.mint.fiestapp.views.controls.CustomTextView>
+            </com.mint.fiestapp.views.custom.CustomTextView>
 
-            <com.mint.fiestapp.views.controls.CustomTextView
+            <com.mint.fiestapp.views.custom.CustomTextView
                 android:id="@+id/texDetalle"
                 customAttrs:customFont="UBUNTU_REGULAR"
                 android:maxLines="1"
@@ -43,7 +45,7 @@
                 android:textSize="12sp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-            </com.mint.fiestapp.views.controls.CustomTextView>
+            </com.mint.fiestapp.views.custom.CustomTextView>
 
         </LinearLayout>
     </LinearLayout>

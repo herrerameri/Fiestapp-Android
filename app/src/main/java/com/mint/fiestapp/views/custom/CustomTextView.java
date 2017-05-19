@@ -1,4 +1,4 @@
-package com.mint.fiestapp.views.controls;
+package com.mint.fiestapp.views.custom;
 
 import android.content.Context;
 import android.graphics.Typeface;

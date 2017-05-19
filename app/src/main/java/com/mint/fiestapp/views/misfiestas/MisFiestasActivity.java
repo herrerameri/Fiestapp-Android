@@ -11,13 +11,15 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.mint.fiestapp.R;
+import com.mint.fiestapp.comun.IntentKeys;
+import com.mint.fiestapp.presenters.IPresenter;
 import com.mint.fiestapp.presenters.misfiestas.IMisFiestasPresenter;
 import com.mint.fiestapp.presenters.misfiestas.MisFiestasPresenter;
 
 
 public class MisFiestasActivity extends AppCompatActivity implements IMisFiestasActivity{
 
-    IMisFiestasPresenter presenter = new MisFiestasPresenter(this, this);
+    IMisFiestasPresenter presenter;
     private RecyclerView lisFiestas;
     private RecyclerView.LayoutManager layoutManager;
     private BottomNavigationView navMisFiestas;
@@ -26,16 +28,33 @@ public class MisFiestasActivity extends AppCompatActivity implements IMisFiestas
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_misfiestas);
+        if(getIntent().getExtras() != null){
+            iniciarPresenter((IMisFiestasPresenter)getIntent().getExtras().getSerializable(IntentKeys.PRESENTER));
+        }
         binding();
-        events();
-        presenter.ObtenerFiestas();
+        eventos();
+        presenter.obtenerFiestas();
     }
 
-    private void binding(){
+    @Override
+    public void iniciarPresenter(IPresenter presenter){
+        this.presenter = (IMisFiestasPresenter)presenter;
+        iniciarActivityPresenter();
+    }
+
+    @Override
+    public void iniciarActivityPresenter(){
+        presenter.setContext(this);
+        presenter.setActivity(this);
+    }
+
+    @Override
+    public void binding(){
         lisFiestas = (RecyclerView) findViewById(R.id.lisFiestas);
     }
 
-    private void events(){
+    @Override
+    public void eventos(){
         iniciarListaFiestas();
         iniciarBottomNav();
     }

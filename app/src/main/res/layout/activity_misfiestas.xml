@@ -8,7 +8,8 @@
         android:id="@+id/lisFiestas"
         android:background="@color/background"
         android:padding="@dimen/padding_cards"
-        android:scrollbars="vertical"
+        android:scrollbars="none"
+        android:layout_marginBottom="@dimen/marginBottomNav"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

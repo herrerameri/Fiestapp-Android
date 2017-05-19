@@ -1,50 +1,175 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:customAttrs="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/card_view"
-    android:layout_marginBottom="@dimen/between_cards"
     android:layout_width="match_parent"
-    android:layout_height="70dp">
+    android:layout_height="match_parent">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
         <ImageView
-            android:id="@+id/imgFiesta"
-            android:layout_height="50dp"
-            android:layout_width="50dp"/>
+            android:id="@+id/imgBackFiesta"
+            android:layout_width="match_parent"
+            android:scaleType="centerCrop"
+            android:layout_height="420dp"
+            android:background="@drawable/background_fiesta"/>
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="@dimen/padding_text"
-            android:gravity="center_vertical"
+            android:id="@+id/linFotoFiesta"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_centerInParent="true"
             android:orientation="vertical">
 
-            <com.mint.fiestapp.views.controls.CustomTextView
-                android:id="@+id/texNombre"
-                customAttrs:customFont="UBUNTU_NORMAL"
-                android:maxLines="1"
-                android:textStyle="bold"
-                android:textColor="@color/titles"
-                android:textSize="16sp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-            </com.mint.fiestapp.views.controls.CustomTextView>
-
-            <com.mint.fiestapp.views.controls.CustomTextView
-                android:id="@+id/texDetalle"
-                customAttrs:customFont="UBUNTU_REGULAR"
-                android:maxLines="1"
-                android:textColor="@color/subtitles"
-                android:textSize="12sp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-            </com.mint.fiestapp.views.controls.CustomTextView>
-
+            <ImageView
+                android:id="@+id/imgFotoFiesta"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
         </LinearLayout>
-    </LinearLayout>
-</android.support.v7.widget.CardView>
+
+        <LinearLayout
+            android:id="@+id/linTituloFiesta"
+            android:layout_marginTop="270dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <com.mint.fiestapp.views.custom.CustomTextView
+                android:id="@+id/texTitulo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/titles"
+                android:gravity="center"
+                android:paddingLeft="80dp"
+                android:paddingRight="80dp"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                customAttrs:customFont="UBUNTU_NORMAL"
+                android:text="Casamiento MN"/>
+
+            <com.mint.fiestapp.views.custom.CustomTextView
+                android:id="@+id/texDescripcion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/subtitles"
+                android:gravity="center"
+                android:paddingLeft="80dp"
+                android:paddingRight="80dp"
+                android:textSize="12sp"
+                android:textStyle="italic"
+                customAttrs:customFont="UBUNTU_REGULAR"
+                android:text="There is only one happiness in this life to love and be loved"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linNumerosFiesta"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:weightSum="1"
+            android:layout_marginTop="@dimen/between_cards"
+            android:layout_below="@id/linTituloFiesta"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="0.333"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:layout_height="wrap_content">
+
+                <com.mint.fiestapp.views.custom.CustomTextView
+                    android:id="@+id/texCantidadFotos"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/titles"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    customAttrs:customFont="UBUNTU_NORMAL"
+                    android:gravity="center"
+                    android:text="324"/>
+
+                <com.mint.fiestapp.views.custom.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/subtitles"
+                    customAttrs:customFont="UBUNTU_REGULAR"
+                    android:textSize="11sp"
+                    android:gravity="center"
+                    android:text="@string/fotos"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="0.333"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_height="wrap_content">
+
+                <com.mint.fiestapp.views.custom.CustomTextView
+                    android:id="@+id/texCantidadDias"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/titles"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    customAttrs:customFont="UBUNTU_NORMAL"
+                    android:gravity="center"
+                    android:text="324"/>
+
+                <com.mint.fiestapp.views.custom.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/subtitles"
+                    customAttrs:customFont="UBUNTU_REGULAR"
+                    android:textSize="11sp"
+                    android:gravity="center"
+                    android:text="@string/fotos"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="0.333"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:layout_height="wrap_content">
+
+                <com.mint.fiestapp.views.custom.CustomTextView
+                    android:id="@+id/texCantidadInvitados"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/titles"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    customAttrs:customFont="UBUNTU_NORMAL"
+                    android:gravity="center"
+                    android:text="324"/>
+
+                <com.mint.fiestapp.views.custom.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/subtitles"
+                    customAttrs:customFont="UBUNTU_REGULAR"
+                    android:textSize="11sp"
+                    android:gravity="center"
+                    android:text="@string/invitados"/>
+
+            </LinearLayout>
+        </LinearLayout>
+        <GridLayout
+            android:id="@+id/griOpcionesFiesta"
+            android:layout_below="@id/linNumerosFiesta"
+            android:background="@color/background"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="fill_vertical"
+            android:columnCount="3"
+            android:orientation="horizontal"
+            android:rowCount="1">
+        </GridLayout>
+    </RelativeLayout>
+</ScrollView>

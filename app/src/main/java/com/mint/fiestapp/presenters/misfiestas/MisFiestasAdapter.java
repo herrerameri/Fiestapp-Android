@@ -10,8 +10,8 @@ import android.widget.ImageView;
 
 import com.mint.fiestapp.R;
 import com.mint.fiestapp.models.entidades.FiestaModel;
-import com.mint.fiestapp.views.controls.CustomTextView;
-import com.mint.fiestapp.views.controls.RoundedTransformation;
+import com.mint.fiestapp.views.custom.CustomTextView;
+import com.mint.fiestapp.views.custom.ImageCircleTransform;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -19,10 +19,10 @@ import java.util.List;
 public class MisFiestasAdapter extends RecyclerView.Adapter<MisFiestasAdapter.ViewHolder> {
     List<FiestaModel> datos;
     MisFiestasAdapter.OnFiestaClickListener listener;
-    Context context;
+    static Context context;
 
     public interface OnFiestaClickListener {
-        void onFiestaClick(FiestaModel item);
+        void onFiestaClick(Context context, FiestaModel item);
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -40,15 +40,16 @@ public class MisFiestasAdapter extends RecyclerView.Adapter<MisFiestasAdapter.Vi
         public void bind(final FiestaModel item, final MisFiestasAdapter.OnFiestaClickListener listener) {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override public void onClick(View v) {
-                    listener.onFiestaClick(item);
+                    listener.onFiestaClick(context, item);
                 }
             });
         }
     }
 
-    public MisFiestasAdapter(List<FiestaModel> datos, MisFiestasAdapter.OnFiestaClickListener listener) {
+    public MisFiestasAdapter(List<FiestaModel> datos, Context context, MisFiestasAdapter.OnFiestaClickListener listener) {
         this.datos = datos;
         this.listener = listener;
+        this.context = context;
     }
 
     @Override
@@ -64,7 +65,8 @@ public class MisFiestasAdapter extends RecyclerView.Adapter<MisFiestasAdapter.Vi
         view.texNombre.setText(datos.get(position).Nombre);
         view.texDetalle.setText(datos.get(position).FechaHora());
         Picasso.with(context).load(datos.get(position).Imagen)
-                .transform(new RoundedTransformation(4,0)).into(view.imgFiesta);
+                .transform(new ImageCircleTransform())
+                .into(view.imgFiesta);
         view.bind(datos.get(position), listener);
 
     }
