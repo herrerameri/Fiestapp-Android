@@ -9,16 +9,17 @@
         </shape>
     </item>
     <item android:top="0dp"
-          android:width="500dp"
+          android:width="900dp"
           android:bottom="200dp">
         <rotate
-            android:fromDegrees="355"
+            android:fromDegrees="345"
             android:toDegrees="370"
             android:pivotX="0%"
             android:pivotY="100%" >
             <shape android:shape="rectangle"
                 >
                 <gradient
+                    android:angle="270"
                     android:startColor="@color/colorAccent"
                     android:endColor="@color/colorPrimary"
                     android:color="@color/background" />

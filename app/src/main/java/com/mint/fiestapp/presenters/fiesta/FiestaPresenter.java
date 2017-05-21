@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.mint.fiestapp.R;
+import com.mint.fiestapp.comun.EnumFuncionalidades;
 import com.mint.fiestapp.comun.IntentKeys;
 import com.mint.fiestapp.models.entidades.FiestaModel;
 import com.mint.fiestapp.views.IActivity;
@@ -32,13 +33,43 @@ public class FiestaPresenter implements IFiestaPresenter {
     }
 
     @Override
-    public int totalFuncionalidades() {
+    public int getTotalFuncionalidades() {
         return model.Funcionalidades.size();
     }
 
     @Override
-    public int idIconoFuncionalidad(int indice) {
-        return R.mipmap.ic_insert_photo;//model.Funcionalidades.get(indice).;
+    public int getIdIconoFuncionalidad(int indice) {
+        switch (model.Funcionalidades.get(indice))
+        {
+            case ASISTENCIA:
+                return R.mipmap.ic_pan_tool;
+            case GALERIA:
+                return R.mipmap.ic_insert_photo;
+            case INFORMACION:
+                return R.mipmap.ic_place;
+            case MENU:
+                return R.mipmap.ic_restaurant;
+            case MEGUSTAS:
+                return R.mipmap.ic_favorite;
+            case VESTIMENTA:
+                return R.mipmap.ic_action_notifications;
+            case REGALOS:
+                return R.mipmap.ic_action_notifications;
+            case MUSICA:
+                return R.mipmap.ic_action_notifications;
+            default:
+                return R.mipmap.ic_insert_photo;
+        }
+    }
+
+    @Override
+    public void clickOnFuncionalidad(int indice){
+
+    }
+
+    @Override
+    public String getTituloFuncionalidad(int indice) {
+        return model.Funcionalidades.get(indice).getNombre();
     }
 
     @Override

@@ -1,8 +1,13 @@
 package com.mint.fiestapp.views.fiesta;
 
+import android.app.ActionBar;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -75,7 +80,7 @@ public class FiestaActivity extends AppCompatActivity implements IFiestaActivity
     private void iniciarGrid(){
         griOpcionesFiesta.removeAllViews();
 
-        int total = presenter.totalFuncionalidades();
+        int total = presenter.getTotalFuncionalidades();
         int column = COLUMNAS;
         int row = total / column;
         griOpcionesFiesta.setColumnCount(column);
@@ -85,19 +90,14 @@ public class FiestaActivity extends AppCompatActivity implements IFiestaActivity
                 c = 0;
                 r++;
             }
-            ImageView oImageView = new ImageView(this);
-            int icono = presenter.idIconoFuncionalidad(i);
-            oImageView.setImageResource(icono);
-            oImageView.setLayoutParams(new LinearLayout.LayoutParams(100, 100));
 
+            CardView cardFuncionalidad = prepararCardFuncionalidad(i);
             GridLayout.Spec rowSpan = GridLayout.spec(GridLayout.UNDEFINED, 1);
             GridLayout.Spec colspan = GridLayout.spec(GridLayout.UNDEFINED, 1);
-            if (r == 0 && c == 0) {
-                colspan = GridLayout.spec(GridLayout.UNDEFINED, 2);
-                rowSpan = GridLayout.spec(GridLayout.UNDEFINED, 2);
-            }
+
             GridLayout.LayoutParams gridParam = new GridLayout.LayoutParams(rowSpan, colspan);
-            griOpcionesFiesta.addView(oImageView, gridParam);
+            griOpcionesFiesta.addView(cardFuncionalidad, gridParam);
+
         }
     }
 
@@ -111,5 +111,20 @@ public class FiestaActivity extends AppCompatActivity implements IFiestaActivity
     public void iniciarActivityPresenter(){
         presenter.setContext(this);
         presenter.setActivity(this);
+    }
+
+    private CardView prepararCardFuncionalidad(final int indice){
+        CardView cardFuncionalidad = (CardView) LayoutInflater.from(this).inflate(R.layout.activity_fiesta_funcionalidad, null);
+        int icono = presenter.getIdIconoFuncionalidad(indice);
+        String titulo = presenter.getTituloFuncionalidad(indice);
+        ((ImageView)cardFuncionalidad.findViewById(R.id.imgIconoFuncionalidad)).setImageResource(icono);
+        ((TextView)cardFuncionalidad.findViewById(R.id.texTituloFuncionalidad)).setText(titulo);
+        cardFuncionalidad.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.clickOnFuncionalidad(indice);
+            }
+        });
+        return cardFuncionalidad;
     }
 }

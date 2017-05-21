@@ -7,4 +7,5 @@
     <dimen name="between_cards">17dp</dimen>
     <dimen name="marginBottomNav">50dp</dimen>
     <dimen name="little_gap">5dp</dimen>
+    <dimen name="fontsize_title">16sp</dimen>
 </resources>

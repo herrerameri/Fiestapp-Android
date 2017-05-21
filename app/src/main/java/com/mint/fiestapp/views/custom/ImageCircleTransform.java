@@ -3,6 +3,7 @@ package com.mint.fiestapp.views.custom;
 import android.graphics.Bitmap;
 import android.graphics.BitmapShader;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 
 import com.squareup.picasso.Transformation;
@@ -29,7 +30,14 @@ public class ImageCircleTransform implements Transformation {
         paint.setAntiAlias(true);
 
         float r = size/2f;
-        canvas.drawCircle(r, r, r, paint);
+        canvas.drawCircle(r, r, r-25, paint);
+
+        Paint paintCircle = new Paint();
+        paintCircle.setColor(Color.WHITE);
+        paintCircle.setStyle(Paint.Style.FILL);
+        paintCircle.setAntiAlias(true);
+        paintCircle.setAlpha(50);
+        canvas.drawCircle(r, r, r, paintCircle);
 
         squaredBitmap.recycle();
         return bitmap;

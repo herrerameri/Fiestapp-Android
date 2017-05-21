@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:customAttrs="http://schemas.android.com/apk/res-auto"
+    android:background="@color/background"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -13,25 +14,27 @@
             android:id="@+id/imgBackFiesta"
             android:layout_width="match_parent"
             android:scaleType="centerCrop"
-            android:layout_height="420dp"
+            android:layout_height="400dp"
             android:background="@drawable/background_fiesta"/>
 
         <LinearLayout
             android:id="@+id/linFotoFiesta"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="90dp"
             android:orientation="vertical">
 
             <ImageView
                 android:id="@+id/imgFotoFiesta"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_width="130dp"
+                android:layout_height="130dp"/>
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/linTituloFiesta"
-            android:layout_marginTop="270dp"
+            android:layout_marginTop="20dp"
+            android:layout_below="@id/linFotoFiesta"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
@@ -65,6 +68,7 @@
 
         <LinearLayout
             android:id="@+id/linNumerosFiesta"
+            android:paddingBottom="@dimen/padding_cards"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
@@ -78,6 +82,41 @@
                 android:layout_weight="0.333"
                 android:gravity="center"
                 android:orientation="vertical"
+                android:layout_height="wrap_content">
+
+                <com.mint.fiestapp.views.custom.CustomTextView
+                    android:id="@+id/texCantidadDias"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/titles"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    customAttrs:customFont="UBUNTU_NORMAL"
+                    android:gravity="center"
+                    android:text="324"/>
+
+                <com.mint.fiestapp.views.custom.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/subtitles"
+                    customAttrs:customFont="UBUNTU_REGULAR"
+                    android:textSize="11sp"
+                    android:gravity="center"
+                    android:text="@string/dias_faltantes"/>
+
+            </LinearLayout>
+            <View
+                android:layout_height="match_parent"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                android:layout_width="1dp"
+                android:background="@color/background">
+            </View>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="0.333"
+                android:orientation="vertical"
+                android:gravity="center"
                 android:layout_height="wrap_content">
 
                 <com.mint.fiestapp.views.custom.CustomTextView
@@ -101,36 +140,13 @@
                     android:text="@string/fotos"/>
 
             </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_weight="0.333"
-                android:orientation="vertical"
-                android:gravity="center"
-                android:layout_height="wrap_content">
-
-                <com.mint.fiestapp.views.custom.CustomTextView
-                    android:id="@+id/texCantidadDias"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/titles"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    customAttrs:customFont="UBUNTU_NORMAL"
-                    android:gravity="center"
-                    android:text="324"/>
-
-                <com.mint.fiestapp.views.custom.CustomTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/subtitles"
-                    customAttrs:customFont="UBUNTU_REGULAR"
-                    android:textSize="11sp"
-                    android:gravity="center"
-                    android:text="@string/fotos"/>
-
-            </LinearLayout>
-
+            <View
+                android:layout_height="match_parent"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                android:layout_width="1dp"
+                android:background="@color/background">
+            </View>
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_weight="0.333"
@@ -163,13 +179,13 @@
         <GridLayout
             android:id="@+id/griOpcionesFiesta"
             android:layout_below="@id/linNumerosFiesta"
-            android:background="@color/background"
+            android:padding="@dimen/padding_cards"
+            android:alignmentMode="alignBounds"
+            android:useDefaultMargins="true"
+            android:verticalSpacing="@dimen/padding_cards"
+            android:horizontalSpacing="@dimen/padding_cards"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="fill_vertical"
-            android:columnCount="3"
-            android:orientation="horizontal"
-            android:rowCount="1">
+            android:layout_height="match_parent">
         </GridLayout>
     </RelativeLayout>
 </ScrollView>

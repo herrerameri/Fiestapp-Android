@@ -4,23 +4,39 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <LinearLayout
+        android:id="@+id/linActionBar"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:gravity="center"
+        android:background="@drawable/gradiente">
+
+        <com.mint.fiestapp.views.custom.CustomTextView
+            app:customFont="UBUNTU_NORMAL"
+            android:textSize="@dimen/fontsize_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:text="@string/mis_fiestas"/>
+    </LinearLayout>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/lisFiestas"
         android:background="@color/background"
         android:padding="@dimen/padding_cards"
         android:scrollbars="none"
-        android:layout_marginBottom="@dimen/marginBottomNav"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_below="@+id/linActionBar"
+        android:layout_alignParentLeft="true" />
 
-    <android.support.design.widget.BottomNavigationView
+    <com.mint.fiestapp.views.custom.CustomBottomNavigation
         android:id="@+id/navMisFiestas"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        app:itemBackground="@color/colorPrimary"
-        app:itemIconTint="@color/white"
-        app:itemTextColor="@color/white"
+        app:itemBackground="@color/white"
+        app:itemIconTint="@color/colorPrimary"
         app:menu="@menu/nav_misfiestas" />
 
 </RelativeLayout>

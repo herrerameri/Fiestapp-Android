@@ -2,9 +2,7 @@
     <string name="app_name">Fiestapp</string>
 
     <!-- MIS FIESTAS -->
-    <string name="mis_fiestas">Fiestas</string>
-    <string name="notificaciones">Notificaciones</string>
-    <string name="nueva_fiesta">Nueva fiesta</string>
+    <string name="mis_fiestas">Mis fiestas</string>
 
     <!-- FIESTA -->
     <string name="dias_faltantes">DÍAS</string>
