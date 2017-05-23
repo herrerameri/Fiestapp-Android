@@ -3,17 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/action_misfiestas"
+        android:title="@string/mis_fiestas"
         android:enabled="true"
         android:icon="@mipmap/ic_launcher"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_nuevafiesta"
         android:enabled="true"
+        android:title="@string/nueva_fiesta"
         android:icon="@mipmap/ic_action_add_circle"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_notificaciones"
         android:enabled="true"
+        android:title="@string/notificaciones"
         android:icon="@mipmap/ic_action_notifications"
         app:showAsAction="ifRoom" />
 </menu>

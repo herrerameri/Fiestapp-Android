@@ -30,7 +30,7 @@ public class ImageCircleTransform implements Transformation {
         paint.setAntiAlias(true);
 
         float r = size/2f;
-        canvas.drawCircle(r, r, r-25, paint);
+        canvas.drawCircle(r, r, r-(0.15f*r), paint);
 
         Paint paintCircle = new Paint();
         paintCircle.setColor(Color.WHITE);

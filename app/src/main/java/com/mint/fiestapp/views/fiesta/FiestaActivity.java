@@ -1,14 +1,10 @@
 package com.mint.fiestapp.views.fiesta;
 
-import android.app.ActionBar;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.CardView;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -24,7 +20,7 @@ import com.squareup.picasso.Picasso;
 public class FiestaActivity extends AppCompatActivity implements IFiestaActivity {
 
     IFiestaPresenter presenter;
-    GridLayout griOpcionesFiesta;
+    LinearLayout linOpcionesFiesta;
     ImageView imgFotoFiesta;
     TextView texTitulo;
     TextView texDescripcion;
@@ -33,6 +29,7 @@ public class FiestaActivity extends AppCompatActivity implements IFiestaActivity
     TextView texCantidadDias;
 
     int COLUMNAS = 3;
+    int HEIGHT_FUNCIONALIDAD = 350;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -47,7 +44,7 @@ public class FiestaActivity extends AppCompatActivity implements IFiestaActivity
 
     @Override
     public void binding(){
-        griOpcionesFiesta = (GridLayout)findViewById(R.id.griOpcionesFiesta);
+        linOpcionesFiesta = (LinearLayout) findViewById(R.id.linOpcionesFiesta);
         texTitulo = (TextView)findViewById(R.id.texTitulo);
         texDescripcion = (TextView)findViewById(R.id.texDescripcion);
         texCantidadDias = (TextView)findViewById(R.id.texCantidadDias);
@@ -78,26 +75,51 @@ public class FiestaActivity extends AppCompatActivity implements IFiestaActivity
     }
 
     private void iniciarGrid(){
-        griOpcionesFiesta.removeAllViews();
+        linOpcionesFiesta.removeAllViews();
+        int totalFuncionalidades = presenter.getTotalFuncionalidades();
+        int cantidadFilasCompletas = totalFuncionalidades / COLUMNAS;
+        int cantidadFuncionalidadesFilaIncompleta = totalFuncionalidades % COLUMNAS;
 
-        int total = presenter.getTotalFuncionalidades();
-        int column = COLUMNAS;
-        int row = total / column;
-        griOpcionesFiesta.setColumnCount(column);
-        griOpcionesFiesta.setRowCount(row + 1);
-        for (int i = 0, c = 0, r = 0; i < total; i++, c++) {
-            if (c == column) {
-                c = 0;
-                r++;
+        int posicionEnFila = 0;
+        int indiceFuncionalidad = 0;
+
+        LinearLayout.LayoutParams parametrosLayout = new LinearLayout.LayoutParams(0, HEIGHT_FUNCIONALIDAD, (float)1/COLUMNAS);
+
+        while(cantidadFilasCompletas > 0){
+            LinearLayout layoutFila = new LinearLayout(this);
+            layoutFila.setOrientation(LinearLayout.HORIZONTAL);
+
+            while(posicionEnFila < COLUMNAS){
+                layoutFila.addView(prepararCardFuncionalidad(indiceFuncionalidad), parametrosLayout);
+                posicionEnFila++;
+                indiceFuncionalidad++;
             }
 
-            CardView cardFuncionalidad = prepararCardFuncionalidad(i);
-            GridLayout.Spec rowSpan = GridLayout.spec(GridLayout.UNDEFINED, 1);
-            GridLayout.Spec colspan = GridLayout.spec(GridLayout.UNDEFINED, 1);
+            linOpcionesFiesta.addView(layoutFila);
+            cantidadFilasCompletas--;
+            posicionEnFila = 0;
+        }
 
-            GridLayout.LayoutParams gridParam = new GridLayout.LayoutParams(rowSpan, colspan);
-            griOpcionesFiesta.addView(cardFuncionalidad, gridParam);
+        if (cantidadFuncionalidadesFilaIncompleta != 0) {
+            LinearLayout layout = new LinearLayout(this);
+            layout.setOrientation(LinearLayout.HORIZONTAL);
+            parametrosLayout = new LinearLayout.LayoutParams(0, HEIGHT_FUNCIONALIDAD,(float)1/COLUMNAS);
+            LinearLayout cardFuncionalidad = null;
 
+            while(posicionEnFila < cantidadFuncionalidadesFilaIncompleta){
+                cardFuncionalidad = prepararCardFuncionalidad(indiceFuncionalidad);
+                layout.addView(cardFuncionalidad, parametrosLayout);
+                posicionEnFila++;
+                indiceFuncionalidad++;
+            }
+
+            while(posicionEnFila < COLUMNAS){
+                cardFuncionalidad = new LinearLayout(this);
+                cardFuncionalidad.setVisibility(View.INVISIBLE);
+                layout.addView(cardFuncionalidad, parametrosLayout);
+                posicionEnFila++;
+            }
+            linOpcionesFiesta.addView(layout);
         }
     }
 
@@ -113,8 +135,8 @@ public class FiestaActivity extends AppCompatActivity implements IFiestaActivity
         presenter.setActivity(this);
     }
 
-    private CardView prepararCardFuncionalidad(final int indice){
-        CardView cardFuncionalidad = (CardView) LayoutInflater.from(this).inflate(R.layout.activity_fiesta_funcionalidad, null);
+    private LinearLayout prepararCardFuncionalidad(final int indice){
+        LinearLayout cardFuncionalidad = (LinearLayout) LayoutInflater.from(this).inflate(R.layout.activity_fiesta_funcionalidad, null);
         int icono = presenter.getIdIconoFuncionalidad(indice);
         String titulo = presenter.getTituloFuncionalidad(indice);
         ((ImageView)cardFuncionalidad.findViewById(R.id.imgIconoFuncionalidad)).setImageResource(icono);

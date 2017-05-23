@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Fiestapp</string>
+    <string name="nueva_fiesta">Agregar fiesta</string>
+    <string name="notificaciones">Notificaciones</string>
 
     <!-- MIS FIESTAS -->
     <string name="mis_fiestas">Mis fiestas</string>

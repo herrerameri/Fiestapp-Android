@@ -1,35 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
+<LinearLayout
     xmlns:customAttrs="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_margin="@dimen/between_cards"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:padding="@dimen/padding_text">
+        android:layout_margin="@dimen/little_gap"
+        android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/imgIconoFuncionalidad"
-            android:src="@mipmap/ic_action_add_circle"
-            android:tint="@color/colorPrimary"
-            android:layout_width="50dp"
-            android:layout_height="50dp" />
-
-        <com.mint.fiestapp.views.custom.CustomTextView
-            android:id="@+id/texTituloFuncionalidad"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:maxLines="1"
-            android:textAlignment="center"
-            android:textColor="@color/subtitles"
-            android:text="@string/app_name"
-            android:textSize="11sp"
-            customAttrs:customFont="UBUNTU_NORMAL">
-        </com.mint.fiestapp.views.custom.CustomTextView>
-    </LinearLayout>
-</android.support.v7.widget.CardView>
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="@dimen/padding_text">
+
+            <ImageView
+                android:id="@+id/imgIconoFuncionalidad"
+                android:src="@mipmap/ic_action_add_circle"
+                android:tint="@color/colorPrimary"
+                android:layout_width="40dp"
+                android:layout_height="40dp" />
+
+            <com.mint.fiestapp.views.custom.CustomTextView
+                android:id="@+id/texTituloFuncionalidad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="2"
+                android:textAlignment="center"
+                android:textColor="@color/subtitles"
+                android:text="@string/app_name"
+                android:textSize="13sp"
+                customAttrs:customFont="UBUNTU_NORMAL">
+            </com.mint.fiestapp.views.custom.CustomTextView>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+</LinearLayout>

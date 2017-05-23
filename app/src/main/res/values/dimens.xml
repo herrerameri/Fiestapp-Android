@@ -1,11 +1,14 @@
 <resources>
-    <!-- Default screen margins, per the Android Design guidelines. -->
+    <!-- Comunes -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="padding_cards">17dp</dimen>
     <dimen name="padding_text">10dp</dimen>
     <dimen name="between_cards">17dp</dimen>
-    <dimen name="marginBottomNav">50dp</dimen>
+    <dimen name="margin_bottom_nav">50dp</dimen>
     <dimen name="little_gap">5dp</dimen>
+
+    <!-- Fuente -->
     <dimen name="fontsize_title">16sp</dimen>
+
 </resources>

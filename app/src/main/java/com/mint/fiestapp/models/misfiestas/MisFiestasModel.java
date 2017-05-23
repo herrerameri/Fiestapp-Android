@@ -14,7 +14,7 @@ public class MisFiestasModel implements IMisFiestasModel {
         respuesta.Modelo = new ArrayList<>();
 
         FiestaModel fiesta1 = new FiestaModel();
-        fiesta1.Nombre = "Casamiento Meri & Nico";
+        fiesta1.Nombre = "Casamiento Meri & Nico con un título muy pero muy largo";
         fiesta1.Fecha = "23/10/2018";
         fiesta1.Detalle= "Nos amamos y nos casamos";
         fiesta1.Hora = "20:30HS";
