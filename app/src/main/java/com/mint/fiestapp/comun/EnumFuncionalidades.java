@@ -9,7 +9,6 @@ public enum EnumFuncionalidades implements Serializable {
     MENU("Menú"),
     REGALOS("Lista de Regalos"),
     ASISTENCIA("Asistencia"),
-    INFORMACION("Información"),
     VESTIMENTA("Vestimenta"),
     MUSICA("Música");
 

@@ -12,7 +12,9 @@ public class CustomTextView extends android.support.v7.widget.AppCompatTextView 
 
     static enum CustomFont {
         UBUNTU_NORMAL("fonts/Ubuntu-M.ttf"),
-        UBUNTU_REGULAR("fonts/Ubuntu-R.ttf");
+        UBUNTU_REGULAR("fonts/Ubuntu-R.ttf"),
+        UBUNTU_BOLD("fonts/Ubuntu-B.ttf"),
+        UBUNTU_ITALICA("fonts/Ubuntu-I.ttf");
 
         private final String fileName;
 

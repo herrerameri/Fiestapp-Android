@@ -10,4 +10,5 @@ public interface IActivity extends Serializable {
     void eventos();
     void iniciarPresenter(IPresenter presenter);
     void iniciarActivityPresenter();
+    void mostrarProgreso();
 }

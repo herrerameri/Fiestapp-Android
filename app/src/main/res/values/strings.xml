@@ -1,5 +1,7 @@
 <resources>
-    <string name="app_name">Fiestapp</string>
+    <string name="app_name">Fiestapp!</string>
+    <string name="tituloSplash">F I E S T A P P!</string>
+    <string name="eslogan">Por momentos aún mejores.</string>
     <string name="nueva_fiesta">Agregar fiesta</string>
     <string name="notificaciones">Notificaciones</string>
 
@@ -10,8 +12,9 @@
     <string name="dias_faltantes">DÍAS</string>
     <string name="invitados">INVITADOS</string>
     <string name="fotos">FOTOS</string>
-    <string name="grid_fotos">Fotos</string>
-    <string name="grid_me_gustas">¡Me gustás!</string>
-    <string name="grid_menu">Menú</string>
-    <string name="grid_musica">Música</string>
+    <string name="mas_info">+ INFO</string>
+    <string name="ver_galeria">VER GALERÍA</string>
+    <string name="subir_foto">SUBIR FOTO</string>
+    <string name="proponer_cancion">PROPONER CANCIÓN</string>
+    <string name="que_opinion_musica">¿Que opinás sobre la música?</string>
 </resources>

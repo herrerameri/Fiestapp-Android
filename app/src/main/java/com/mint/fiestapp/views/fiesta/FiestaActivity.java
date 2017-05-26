@@ -3,12 +3,16 @@ package com.mint.fiestapp.views.fiesta;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.mint.fiestapp.R;
 import com.mint.fiestapp.comun.IntentKeys;
 import com.mint.fiestapp.presenters.IPresenter;
@@ -17,19 +21,21 @@ import com.mint.fiestapp.views.custom.ImageCircleTransform;
 import com.squareup.picasso.Picasso;
 
 
-public class FiestaActivity extends AppCompatActivity implements IFiestaActivity {
+public class FiestaActivity extends AppCompatActivity implements IFiestaActivity, OnMapReadyCallback {
 
     IFiestaPresenter presenter;
-    LinearLayout linOpcionesFiesta;
-    ImageView imgFotoFiesta;
-    TextView texTitulo;
-    TextView texDescripcion;
-    TextView texCantidadInvitados;
-    TextView texCantidadFotos;
-    TextView texCantidadDias;
+    private LinearLayout linOpcionesFiesta;
+    private ImageView imgFotoFiesta;
+    private TextView texTitulo;
+    private TextView texDescripcion;
+    private TextView texCantidadInvitados;
+    private TextView texCantidadFotos;
+    private TextView texCantidadDias;
 
-    int COLUMNAS = 3;
-    int HEIGHT_FUNCIONALIDAD = 350;
+    private TextView texFecha;
+    private TextView texHora;
+    private TextView texNombreUbicacion;
+    private static SupportMapFragment frgMapUbicacionFiesta;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,20 +50,26 @@ public class FiestaActivity extends AppCompatActivity implements IFiestaActivity
 
     @Override
     public void binding(){
-        linOpcionesFiesta = (LinearLayout) findViewById(R.id.linOpcionesFiesta);
+        linOpcionesFiesta = (LinearLayout)findViewById(R.id.linOpcionesFiesta);
         texTitulo = (TextView)findViewById(R.id.texTitulo);
         texDescripcion = (TextView)findViewById(R.id.texDescripcion);
         texCantidadDias = (TextView)findViewById(R.id.texCantidadDias);
         texCantidadFotos = (TextView)findViewById(R.id.texCantidadFotos);
         texCantidadInvitados = (TextView)findViewById(R.id.texCantidadInvitados);
         imgFotoFiesta = (ImageView)findViewById(R.id.imgFotoFiesta);
+
+        texFecha = (TextView)findViewById(R.id.texFecha);
+        texHora = (TextView)findViewById(R.id.texHora);
+        texNombreUbicacion = (TextView)findViewById(R.id.texNombreUbicacion);
+        frgMapUbicacionFiesta = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapUbicacionFiesta);
+        frgMapUbicacionFiesta.getMapAsync(this);
     }
 
     @Override
     public void eventos() {
         iniciarFoto();
         iniciarTextos();
-        iniciarGrid();
+        //iniciarFuncionalidadesFiesta();
     }
 
     private void iniciarFoto(){
@@ -72,55 +84,26 @@ public class FiestaActivity extends AppCompatActivity implements IFiestaActivity
         texCantidadDias.setText(presenter.getCantidadDias());
         texCantidadFotos.setText(presenter.getCantidadFotos());
         texCantidadInvitados.setText(presenter.getCantidadInvitados());
+        texFecha.setText(presenter.getFecha());
+        texHora.setText(presenter.getHora());
+        texNombreUbicacion.setText(presenter.getNombreUbicacion());
     }
 
-    private void iniciarGrid(){
+    private void iniciarFuncionalidadesFiesta(){
         linOpcionesFiesta.removeAllViews();
         int totalFuncionalidades = presenter.getTotalFuncionalidades();
-        int cantidadFilasCompletas = totalFuncionalidades / COLUMNAS;
-        int cantidadFuncionalidadesFilaIncompleta = totalFuncionalidades % COLUMNAS;
 
-        int posicionEnFila = 0;
-        int indiceFuncionalidad = 0;
-
-        LinearLayout.LayoutParams parametrosLayout = new LinearLayout.LayoutParams(0, HEIGHT_FUNCIONALIDAD, (float)1/COLUMNAS);
-
-        while(cantidadFilasCompletas > 0){
-            LinearLayout layoutFila = new LinearLayout(this);
-            layoutFila.setOrientation(LinearLayout.HORIZONTAL);
-
-            while(posicionEnFila < COLUMNAS){
-                layoutFila.addView(prepararCardFuncionalidad(indiceFuncionalidad), parametrosLayout);
-                posicionEnFila++;
-                indiceFuncionalidad++;
-            }
-
-            linOpcionesFiesta.addView(layoutFila);
-            cantidadFilasCompletas--;
-            posicionEnFila = 0;
+        for(int indice = 0; indice < totalFuncionalidades; indice++){
+            linOpcionesFiesta.addView(presenter.getLayoutFuncionalidad(indice));
         }
+    }
 
-        if (cantidadFuncionalidadesFilaIncompleta != 0) {
-            LinearLayout layout = new LinearLayout(this);
-            layout.setOrientation(LinearLayout.HORIZONTAL);
-            parametrosLayout = new LinearLayout.LayoutParams(0, HEIGHT_FUNCIONALIDAD,(float)1/COLUMNAS);
-            LinearLayout cardFuncionalidad = null;
-
-            while(posicionEnFila < cantidadFuncionalidadesFilaIncompleta){
-                cardFuncionalidad = prepararCardFuncionalidad(indiceFuncionalidad);
-                layout.addView(cardFuncionalidad, parametrosLayout);
-                posicionEnFila++;
-                indiceFuncionalidad++;
-            }
-
-            while(posicionEnFila < COLUMNAS){
-                cardFuncionalidad = new LinearLayout(this);
-                cardFuncionalidad.setVisibility(View.INVISIBLE);
-                layout.addView(cardFuncionalidad, parametrosLayout);
-                posicionEnFila++;
-            }
-            linOpcionesFiesta.addView(layout);
-        }
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        LatLng ubicacionFiesta = new LatLng(presenter.getLatitud(), presenter.getLongitud());
+        googleMap.addMarker(new MarkerOptions().position(ubicacionFiesta).title(presenter.getNombreUbicacion()));
+        googleMap.setMinZoomPreference(getResources().getInteger(R.integer.maps_zoom_default));
+        googleMap.moveCamera(CameraUpdateFactory.newLatLng(ubicacionFiesta));
     }
 
     @Override
@@ -135,18 +118,6 @@ public class FiestaActivity extends AppCompatActivity implements IFiestaActivity
         presenter.setActivity(this);
     }
 
-    private LinearLayout prepararCardFuncionalidad(final int indice){
-        LinearLayout cardFuncionalidad = (LinearLayout) LayoutInflater.from(this).inflate(R.layout.activity_fiesta_funcionalidad, null);
-        int icono = presenter.getIdIconoFuncionalidad(indice);
-        String titulo = presenter.getTituloFuncionalidad(indice);
-        ((ImageView)cardFuncionalidad.findViewById(R.id.imgIconoFuncionalidad)).setImageResource(icono);
-        ((TextView)cardFuncionalidad.findViewById(R.id.texTituloFuncionalidad)).setText(titulo);
-        cardFuncionalidad.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                presenter.clickOnFuncionalidad(indice);
-            }
-        });
-        return cardFuncionalidad;
-    }
+    @Override
+    public void mostrarProgreso(){}
 }

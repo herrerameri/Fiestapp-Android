@@ -1,14 +1,22 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Comunes -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="padding_cards">17dp</dimen>
     <dimen name="padding_text">10dp</dimen>
-    <dimen name="between_cards">17dp</dimen>
+    <dimen name="between_cards">8dp</dimen>
     <dimen name="margin_bottom_nav">50dp</dimen>
     <dimen name="little_gap">5dp</dimen>
+    <dimen name="height_flat_button">35dp</dimen>
 
     <!-- Fuente -->
     <dimen name="fontsize_title">16sp</dimen>
+    <dimen name="fontsize_flat_button">14sp</dimen>
 
+    <!-- Bottom nav dimens overrite-->
+    <dimen name="design_bottom_navigation_text_size" tools:override="true">10sp</dimen>
+    <dimen name="design_bottom_navigation_icon_size" tools:override="true">24dp</dimen>
+    <dimen name="design_bottom_navigation_active_text_size" tools:override="true">14sp</dimen>
+    <dimen name="design_bottom_navigation_height" tools:override="true">60dp</dimen>
+    <dimen name="design_bottom_navigation_margin" tools:override="true">5dp</dimen>
 </resources>

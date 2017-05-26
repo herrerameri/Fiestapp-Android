@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#006BFF</color>
-    <color name="colorPrimaryDark">#2BC2FF</color>
-    <color name="colorAccent">#2BC2FF</color>
+    <color name="colorPrimaryDark">#006BFF</color>
+    <color name="fucsia">#E800a6</color>
+    <color name="colorAccent">#00B1FF</color>
     <color name="background">#F5F5F5</color>
     <color name="white">#FFFFFF</color>
     <color name="titles">#666666</color>
+    <color name="violet">#BD10E0</color>
     <color name="subtitles">#999999</color>
     <color name="gray">#F5F5F5</color>
 </resources>

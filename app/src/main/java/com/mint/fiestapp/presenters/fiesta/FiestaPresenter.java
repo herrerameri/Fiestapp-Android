@@ -3,9 +3,8 @@ package com.mint.fiestapp.presenters.fiesta;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
-import com.mint.fiestapp.R;
-import com.mint.fiestapp.comun.EnumFuncionalidades;
 import com.mint.fiestapp.comun.IntentKeys;
 import com.mint.fiestapp.models.entidades.FiestaModel;
 import com.mint.fiestapp.views.IActivity;
@@ -38,39 +37,35 @@ public class FiestaPresenter implements IFiestaPresenter {
     }
 
     @Override
-    public int getIdIconoFuncionalidad(int indice) {
+    public View getLayoutFuncionalidad(int indice) {
         switch (model.Funcionalidades.get(indice))
         {
             case ASISTENCIA:
-                return R.mipmap.ic_pan_tool;
             case GALERIA:
-                return R.mipmap.ic_insert_photo;
-            case INFORMACION:
-                return R.mipmap.ic_place;
             case MENU:
-                return R.mipmap.ic_restaurant;
             case MEGUSTAS:
-                return R.mipmap.ic_favorite;
             case VESTIMENTA:
-                return R.mipmap.ic_action_notifications;
             case REGALOS:
-                return R.mipmap.ic_action_notifications;
             case MUSICA:
-                return R.mipmap.ic_action_notifications;
             default:
-                return R.mipmap.ic_insert_photo;
         }
+        return null;
     }
 
     @Override
-    public void clickOnFuncionalidad(int indice){
-
-    }
+    public double getLatitud() { return Double.parseDouble(model.Ubicacion.Latitud); }
 
     @Override
-    public String getTituloFuncionalidad(int indice) {
-        return model.Funcionalidades.get(indice).getNombre();
-    }
+    public double getLongitud() { return Double.parseDouble(model.Ubicacion.Longitud); }
+
+    @Override
+    public String getFecha() { return model.DiaMes(); }
+
+    @Override
+    public String getHora() { return model.Hora(); }
+
+    @Override
+    public String getNombreUbicacion() { return model.Ubicacion.Nombre; }
 
     @Override
     public String getTitulo() {
@@ -110,5 +105,4 @@ public class FiestaPresenter implements IFiestaPresenter {
         intent.putExtras(bundle);
         context.startActivity(intent);
     }
-
 }

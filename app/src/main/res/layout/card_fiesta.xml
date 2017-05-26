@@ -3,9 +3,10 @@
     xmlns:customAttrs="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/card_view"
+    customAttrs:cardUseCompatPadding="true"
     android:layout_marginBottom="@dimen/between_cards"
     android:layout_width="match_parent"
-    android:layout_height="70dp">
+    android:layout_height="80dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,8 +17,8 @@
 
         <ImageView
             android:id="@+id/imgFiesta"
-            android:layout_height="50dp"
-            android:layout_width="50dp"/>
+            android:layout_height="60dp"
+            android:layout_width="60dp"/>
 
         <LinearLayout
             android:layout_width="match_parent"

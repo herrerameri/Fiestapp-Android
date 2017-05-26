@@ -1,18 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:customAttrs="http://schemas.android.com/apk/res-auto"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingBottom="50dp"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:gravity="bottom|center_horizontal"
+    android:orientation="vertical"
     tools:context="com.mint.fiestapp.views.MainActivity">
 
-    <Button
+    <ImageView
+        android:layout_width="164dp"
+        android:layout_height="245dp"
+        android:src="@drawable/bonete">
+
+    </ImageView>
+
+    <com.mint.fiestapp.views.custom.CustomTextView
         android:layout_width="wrap_content"
-        android:id="@+id/btnFiestas"
         android:layout_height="wrap_content"
-        android:text="Fiestas" />
-</RelativeLayout>
+        android:layout_marginTop="40dp"
+        android:textSize="24sp"
+        android:textColor="@color/titles"
+        customAttrs:customFont="UBUNTU_NORMAL"
+        android:text="@string/tituloSplash"/>
+
+    <com.mint.fiestapp.views.custom.CustomTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/titles"
+        customAttrs:customFont="UBUNTU_REGULAR"
+        android:textSize="12sp"
+        android:text="@string/eslogan"/>
+
+
+</LinearLayout>

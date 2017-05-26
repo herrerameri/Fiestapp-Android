@@ -14,6 +14,7 @@ import com.mint.fiestapp.views.misfiestas.IMisFiestasActivity;
 import com.mint.fiestapp.views.misfiestas.MisFiestasActivity;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class MisFiestasPresenter implements IMisFiestasPresenter {
 
@@ -21,6 +22,7 @@ public class MisFiestasPresenter implements IMisFiestasPresenter {
     IMisFiestasActivity activity;
     Context contexto;
 
+    @Override
     public void iniciarActivity(Context context){
         Intent intent = new Intent(context, MisFiestasActivity.class);
         Bundle bundle = new Bundle();
@@ -29,25 +31,30 @@ public class MisFiestasPresenter implements IMisFiestasPresenter {
         context.startActivity(intent);
     }
 
+    @Override
     public void setContext(Context context){
         contexto = context;
     }
 
+    @Override
     public void setActivity(IActivity vista){
         activity = (IMisFiestasActivity)vista;
     }
 
+    @Override
     public void obtenerFiestas(){
-        RespuestaLista<FiestaModel> respuesta = model.obtenerFiestas();
+        activity.mostrarProgreso();
+        model.obtenerFiestas(this);
+    }
 
-        if(!respuesta.Exito)
-        {
-            activity.mostrarError(respuesta.Mensaje);
-        }
-        else
-        {
-            FiestaClickListener listener = new FiestaClickListener();
-            activity.mostrarFiestas(new MisFiestasAdapter(respuesta.Modelo, contexto, listener));
-        }
+    @Override
+    public void mostrarFiestas(List<FiestaModel> modelo){
+        FiestaClickListener listener = new FiestaClickListener();
+        activity.mostrarFiestas(new MisFiestasAdapter(modelo, contexto, listener));
+    }
+
+    @Override
+    public void mostrarError(String mensaje){
+        activity.mostrarError(mensaje);
     }
 }

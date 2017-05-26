@@ -9,4 +9,6 @@ import java.util.List;
 
 public interface IMisFiestasPresenter extends IPresenter {
     void obtenerFiestas();
+    void mostrarFiestas(List<FiestaModel> modelo);
+    void mostrarError(String mensaje);
 }

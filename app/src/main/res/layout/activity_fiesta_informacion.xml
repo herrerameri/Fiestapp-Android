@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:customAttrs="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    customAttrs:cardUseCompatPadding="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="3dp"
+        android:orientation="horizontal">
+
+        <fragment
+            android:id="@+id/mapUbicacionFiesta"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="130dp"
+            android:layout_height="match_parent" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingRight="10dp"
+            android:paddingLeft="10dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.mint.fiestapp.views.custom.CustomTextView
+                    android:id="@+id/texFecha"
+                    customAttrs:customFont="UBUNTU_NORMAL"
+                    android:layout_width="match_parent"
+                    android:maxLines="1"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/titles"
+                    android:textSize="18sp"
+                    android:text="28 septiembre"/>
+
+                <com.mint.fiestapp.views.custom.CustomTextView
+                    android:id="@+id/texHora"
+                    customAttrs:customFont="UBUNTU_REGULAR"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:layout_marginTop="8dp"
+                    android:textColor="@color/subtitles"
+                    android:textSize="18sp"
+                    android:text="21:30hs"/>
+
+                <com.mint.fiestapp.views.custom.CustomTextView
+                    android:id="@+id/texNombreUbicacion"
+                    customAttrs:customFont="UBUNTU_REGULAR"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:layout_marginTop="8dp"
+                    android:textColor="@color/subtitles"
+                    android:textSize="14sp"
+                    android:text="Salón Monumental"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="14dp"
+                android:gravity="bottom|right">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@color/background"/>
+
+                <Button
+                    android:id="@+id/btnMasInfo"
+                    android:text="@string/mas_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/height_flat_button"
+                    style="@style/FlatButton"
+                    android:textColor="@color/subtitles"
+                    android:textSize="@dimen/fontsize_flat_button"/>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</android.support.v7.widget.CardView>

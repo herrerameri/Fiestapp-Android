@@ -5,17 +5,20 @@
         android:id="@+id/action_misfiestas"
         android:title="@string/mis_fiestas"
         android:enabled="true"
-        android:icon="@mipmap/ic_launcher"
+        android:state_selected="true"
+        android:icon="@mipmap/ic_bonete"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_nuevafiesta"
         android:enabled="true"
+        android:state_selected="false"
         android:title="@string/nueva_fiesta"
         android:icon="@mipmap/ic_action_add_circle"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_notificaciones"
         android:enabled="true"
+        android:state_selected="false"
         android:title="@string/notificaciones"
         android:icon="@mipmap/ic_action_notifications"
         app:showAsAction="ifRoom" />
