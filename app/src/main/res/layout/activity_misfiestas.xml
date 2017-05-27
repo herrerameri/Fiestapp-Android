@@ -7,13 +7,14 @@
     <LinearLayout
         android:id="@+id/linActionBar"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="80dp"
         android:gravity="center"
         android:background="@drawable/gradiente">
 
         <com.mint.fiestapp.views.custom.CustomTextView
             app:customFont="UBUNTU_NORMAL"
             android:textSize="@dimen/fontsize_title"
+            android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/white"

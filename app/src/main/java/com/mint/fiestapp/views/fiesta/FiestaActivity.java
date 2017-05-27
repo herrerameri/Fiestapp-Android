@@ -17,11 +17,12 @@ import com.mint.fiestapp.R;
 import com.mint.fiestapp.comun.IntentKeys;
 import com.mint.fiestapp.presenters.IPresenter;
 import com.mint.fiestapp.presenters.fiesta.IFiestaPresenter;
+import com.mint.fiestapp.views.BaseActivity;
 import com.mint.fiestapp.views.custom.ImageCircleTransform;
 import com.squareup.picasso.Picasso;
 
 
-public class FiestaActivity extends AppCompatActivity implements IFiestaActivity, OnMapReadyCallback {
+public class FiestaActivity extends BaseActivity implements IFiestaActivity, OnMapReadyCallback {
 
     IFiestaPresenter presenter;
     private LinearLayout linOpcionesFiesta;

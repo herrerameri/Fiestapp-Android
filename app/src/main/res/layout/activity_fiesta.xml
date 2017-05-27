@@ -19,7 +19,7 @@
             <ImageView
                 android:id="@+id/imgBackFiesta"
                 android:layout_width="match_parent"
-                android:layout_height="203dp"
+                android:layout_height="223dp"
                 android:background="@drawable/back_fiesta"
                 android:scaleType="centerCrop" />
 

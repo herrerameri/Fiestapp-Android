@@ -3,6 +3,7 @@ package com.mint.fiestapp.views.misfiestas;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -21,17 +22,23 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.login.LoginManager;
 import com.mint.fiestapp.R;
 import com.mint.fiestapp.comun.IntentKeys;
 import com.mint.fiestapp.presenters.IPresenter;
 import com.mint.fiestapp.presenters.misfiestas.IMisFiestasPresenter;
 import com.mint.fiestapp.presenters.misfiestas.MisFiestasPresenter;
+import com.mint.fiestapp.views.BaseActivity;
+
+import static android.os.Build.*;
 
 
-public class MisFiestasActivity extends AppCompatActivity implements IMisFiestasActivity{
+public class MisFiestasActivity extends BaseActivity implements IMisFiestasActivity{
 
     IMisFiestasPresenter presenter;
     private RecyclerView lisFiestas;
@@ -42,6 +49,11 @@ public class MisFiestasActivity extends AppCompatActivity implements IMisFiestas
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (VERSION.SDK_INT >= VERSION_CODES.KITKAT) {
+            Window w = getWindow();
+            w.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+            w.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+        }
         setContentView(R.layout.activity_misfiestas);
         if(getIntent().getExtras() != null){
             iniciarPresenter((IMisFiestasPresenter)getIntent().getExtras().getSerializable(IntentKeys.PRESENTER));
@@ -125,4 +137,9 @@ public class MisFiestasActivity extends AppCompatActivity implements IMisFiestas
 
     @Override
     public void mostrarProgreso(){}
+
+    public void logOut() {
+        LoginManager.getInstance().logOut();
+        // GO TO LOGIN
+    }
 }

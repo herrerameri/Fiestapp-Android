@@ -5,6 +5,9 @@
     <string name="nueva_fiesta">Agregar fiesta</string>
     <string name="notificaciones">Notificaciones</string>
 
+    <string name="facebook_app_id">209586026220608</string>
+    <string name="fb_login_protocol_scheme">fb209586026220608</string>
+
     <!-- MIS FIESTAS -->
     <string name="mis_fiestas">Mis fiestas</string>
 
@@ -17,4 +20,6 @@
     <string name="subir_foto">SUBIR FOTO</string>
     <string name="proponer_cancion">PROPONER CANCIÓN</string>
     <string name="que_opinion_musica">¿Que opinás sobre la música?</string>
+    <string name="error_login">Ocurrió un error al conectar con Facebook.</string>
+    <string name="cancelo_login">Se ha cancelado el inicio con Facebook.</string>
 </resources>
