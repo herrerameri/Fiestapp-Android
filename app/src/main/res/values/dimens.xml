@@ -19,4 +19,10 @@
     <dimen name="design_bottom_navigation_active_text_size" tools:override="true">14sp</dimen>
     <dimen name="design_bottom_navigation_height" tools:override="true">60dp</dimen>
     <dimen name="design_bottom_navigation_margin" tools:override="true">5dp</dimen>
+
+    <!-- Fiesta -->
+    <dimen name="margin_foto_fiesta">3dp</dimen>
+    <dimen name="width_foto_fiesta">100dp</dimen>
+    <dimen name="height_foto_fiesta">100dp</dimen>
+
 </resources>

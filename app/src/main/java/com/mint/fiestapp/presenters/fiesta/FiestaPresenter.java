@@ -3,19 +3,29 @@ package com.mint.fiestapp.presenters.fiesta;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 
+import com.mint.fiestapp.R;
 import com.mint.fiestapp.comun.IntentKeys;
 import com.mint.fiestapp.models.entidades.FiestaModel;
+import com.mint.fiestapp.models.entidades.FotoModel;
+import com.mint.fiestapp.models.fotos.FotosModel;
+import com.mint.fiestapp.models.fotos.IFotosModel;
 import com.mint.fiestapp.views.IActivity;
 import com.mint.fiestapp.views.fiesta.FiestaActivity;
+import com.mint.fiestapp.views.fiesta.FotosView;
 import com.mint.fiestapp.views.fiesta.IFiestaActivity;
 
-public class FiestaPresenter implements IFiestaPresenter {
+import java.util.List;
 
+public class FiestaPresenter implements IFiestaPresenter, FotosModel.IFotosModelCallback {
+
+    IFotosModel fotosModel = new FotosModel(this);
     IFiestaActivity activity;
     Context contexto;
     FiestaModel model;
+    FotosView viewFotos;
 
     @Override
     public void setActivity(IActivity activity) {
@@ -27,6 +37,7 @@ public class FiestaPresenter implements IFiestaPresenter {
         contexto = context;
     }
 
+    @Override
     public void setFiesta(FiestaModel model){
         this.model = model;
     }
@@ -34,22 +45,6 @@ public class FiestaPresenter implements IFiestaPresenter {
     @Override
     public int getTotalFuncionalidades() {
         return model.Funcionalidades.size();
-    }
-
-    @Override
-    public View getLayoutFuncionalidad(int indice) {
-        switch (model.Funcionalidades.get(indice))
-        {
-            case ASISTENCIA:
-            case GALERIA:
-            case MENU:
-            case MEGUSTAS:
-            case VESTIMENTA:
-            case REGALOS:
-            case MUSICA:
-            default:
-        }
-        return null;
     }
 
     @Override
@@ -104,5 +99,34 @@ public class FiestaPresenter implements IFiestaPresenter {
         bundle.putSerializable(IntentKeys.PRESENTER, this);
         intent.putExtras(bundle);
         context.startActivity(intent);
+    }
+
+    @Override
+    public View getLayoutFuncionalidad(int indice) {
+        switch (model.Funcionalidades.get(indice))
+        {
+            case ASISTENCIA:
+            case GALERIA:
+                viewFotos = new FotosView();
+                fotosModel.obtenerFotos(8, model.key);
+                return viewFotos.getLayout(contexto);
+            case MENU:
+            case MEGUSTAS:
+            case VESTIMENTA:
+            case REGALOS:
+            case MUSICA:
+            default:
+        }
+        return null;
+    }
+
+    @Override
+    public void mostrarFotos(List<FotoModel> modelo) {
+        viewFotos.setFotos(modelo);
+    }
+
+    @Override
+    public void mostrarError(String mensaje) {
+
     }
 }

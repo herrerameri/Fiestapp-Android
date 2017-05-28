@@ -16,9 +16,9 @@ import com.mint.fiestapp.views.misfiestas.MisFiestasActivity;
 import java.io.Serializable;
 import java.util.List;
 
-public class MisFiestasPresenter implements IMisFiestasPresenter {
+public class MisFiestasPresenter implements IMisFiestasPresenter, MisFiestasModel.IMisFiestasModelCallback {
 
-    IMisFiestasModel model = new MisFiestasModel();
+    IMisFiestasModel model = new MisFiestasModel(this);
     IMisFiestasActivity activity;
     Context contexto;
 
@@ -44,7 +44,7 @@ public class MisFiestasPresenter implements IMisFiestasPresenter {
     @Override
     public void obtenerFiestas(){
         activity.mostrarProgreso();
-        model.obtenerFiestas(this);
+        model.obtenerFiestas();
     }
 
     @Override

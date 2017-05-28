@@ -13,4 +13,5 @@ public class Servicios {
 
     public DatabaseReference fiestasReference = database.getReference("fiestas");
     public DatabaseReference usuariosReference = database.getReference("usuarios");
+    public DatabaseReference fotosReference = database.getReference("fotos");
 }

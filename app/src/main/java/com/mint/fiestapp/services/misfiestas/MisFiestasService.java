@@ -2,13 +2,10 @@ package com.mint.fiestapp.services.misfiestas;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.mint.fiestapp.comun.SampleData;
-import com.mint.fiestapp.models.IModel;
 import com.mint.fiestapp.models.entidades.FiestaModel;
 import com.mint.fiestapp.models.entidades.RespuestaLista;
-import com.mint.fiestapp.models.misfiestas.IMisFiestasModel;
 import com.mint.fiestapp.services.Servicios;
 
 import java.util.ArrayList;
@@ -16,12 +13,18 @@ import java.util.List;
 
 
 public class MisFiestasService extends Servicios implements IMisFiestasService {
-    long cantidadFiestas=0;
-    IMisFiestasModel model;
-    public MisFiestasService(IModel modelo){
-        model = (IMisFiestasModel) modelo;
+
+    public interface IMisFiestasServiceCallback{
+        void callbackObtenerFiestas(RespuestaLista<FiestaModel> respuesta);
     }
+
+    long cantidadFiestas=0;
+    IMisFiestasServiceCallback listener;
     List<FiestaModel> fiestas = new ArrayList<>();
+
+    public MisFiestasService(IMisFiestasServiceCallback callback){
+        listener = callback;
+    }
 
     public void obtenerFiestas(){
         String userId = user.getUid();
@@ -38,8 +41,8 @@ public class MisFiestasService extends Servicios implements IMisFiestasService {
                 public void onCancelled(DatabaseError databaseError) {
                     RespuestaLista<FiestaModel> respuesta = new RespuestaLista<>();
                     respuesta.Exito = false;
-                    respuesta.Mensaje = "Ocurrió un error al conectar con la base de datos.";
-                    model.callbackObtenerFiestas(respuesta);
+                    respuesta.Mensaje = "Ocurrió un error al conectar con el servidor.";
+                    listener.callbackObtenerFiestas(respuesta);
                 }
         });
     }
@@ -57,8 +60,8 @@ public class MisFiestasService extends Servicios implements IMisFiestasService {
                 public void onCancelled(DatabaseError firebaseError) {
                     RespuestaLista<FiestaModel> respuesta = new RespuestaLista<>();
                     respuesta.Exito = false;
-                    respuesta.Mensaje = "Ocurrió un error al conectar con la base de datos.";
-                    model.callbackObtenerFiestas(respuesta);
+                    respuesta.Mensaje = "Ocurrió un error al conectar con el servidor.";
+                    listener.callbackObtenerFiestas(respuesta);
                 }
             });
         }
@@ -70,7 +73,7 @@ public class MisFiestasService extends Servicios implements IMisFiestasService {
             RespuestaLista<FiestaModel> respuesta = new RespuestaLista<>();
             respuesta.Exito = true;
             respuesta.Modelo = fiestas;
-            model.callbackObtenerFiestas(respuesta);
+            listener.callbackObtenerFiestas(respuesta);
         }
     }
 

@@ -7,22 +7,34 @@ import com.mint.fiestapp.presenters.misfiestas.MisFiestasPresenter;
 import com.mint.fiestapp.services.misfiestas.IMisFiestasService;
 import com.mint.fiestapp.services.misfiestas.MisFiestasService;
 
+import java.util.List;
 
-public class MisFiestasModel implements IMisFiestasModel {
+
+public class MisFiestasModel implements IMisFiestasModel, MisFiestasService.IMisFiestasServiceCallback {
     IMisFiestasService services = new MisFiestasService(this);
-    IPresenter presenter;
 
-    public void obtenerFiestas(IPresenter presenter){
-        this.presenter = presenter;
+    public interface IMisFiestasModelCallback{
+        void mostrarFiestas(List<FiestaModel> modelo);
+        void mostrarError(String mensaje);
+    }
+
+    IMisFiestasModelCallback listener;
+
+    public MisFiestasModel(IMisFiestasModelCallback listener){
+        this.listener = listener;
+    }
+
+    public void obtenerFiestas(){
         services.obtenerFiestas();
     }
 
+    @Override
     public void callbackObtenerFiestas(RespuestaLista<FiestaModel> result) {
         if(result.Exito){
-            ((MisFiestasPresenter)presenter).mostrarFiestas(result.Modelo);
+            listener.mostrarFiestas(result.Modelo);
         }
         else{
-            ((MisFiestasPresenter)presenter).mostrarError(result.Mensaje);
+            listener.mostrarError(result.Mensaje);
         }
     }
 }

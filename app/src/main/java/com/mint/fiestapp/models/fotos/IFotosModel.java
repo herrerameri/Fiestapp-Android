@@ -1,12 +1,11 @@
-package com.mint.fiestapp.models.misfiestas;
+package com.mint.fiestapp.models.fotos;
 
 import com.mint.fiestapp.models.IModel;
 import com.mint.fiestapp.models.entidades.FiestaModel;
+import com.mint.fiestapp.models.entidades.FotoModel;
 import com.mint.fiestapp.models.entidades.RespuestaLista;
 import com.mint.fiestapp.presenters.IPresenter;
 
-import java.io.Serializable;
-
-public interface IMisFiestasModel extends IModel {
-    void obtenerFiestas();
+public interface IFotosModel extends IModel {
+    void obtenerFotos(int cantidad, String keyFiesta);
 }

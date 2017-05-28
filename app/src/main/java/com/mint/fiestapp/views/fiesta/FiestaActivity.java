@@ -70,7 +70,7 @@ public class FiestaActivity extends BaseActivity implements IFiestaActivity, OnM
     public void eventos() {
         iniciarFoto();
         iniciarTextos();
-        //iniciarFuncionalidadesFiesta();
+        iniciarFuncionalidadesFiesta();
     }
 
     private void iniciarFoto(){
@@ -91,10 +91,9 @@ public class FiestaActivity extends BaseActivity implements IFiestaActivity, OnM
     }
 
     private void iniciarFuncionalidadesFiesta(){
-        linOpcionesFiesta.removeAllViews();
         int totalFuncionalidades = presenter.getTotalFuncionalidades();
-
-        for(int indice = 0; indice < totalFuncionalidades; indice++){
+        int indice = 0;
+        for(indice = 0; indice < totalFuncionalidades; indice++){
             linOpcionesFiesta.addView(presenter.getLayoutFuncionalidad(indice));
         }
     }

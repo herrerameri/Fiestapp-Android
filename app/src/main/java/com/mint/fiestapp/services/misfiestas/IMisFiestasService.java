@@ -1,8 +1,8 @@
 package com.mint.fiestapp.services.misfiestas;
 
-import java.io.Serializable;
+import com.mint.fiestapp.services.IService;
 
-public interface IMisFiestasService  extends Serializable{
+public interface IMisFiestasService extends IService{
     void obtenerFiestas();
     void crearFiestasInitialData();
 }

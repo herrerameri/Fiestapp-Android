@@ -22,4 +22,5 @@
     <string name="que_opinion_musica">¿Que opinás sobre la música?</string>
     <string name="error_login">Ocurrió un error al conectar con Facebook.</string>
     <string name="cancelo_login">Se ha cancelado el inicio con Facebook.</string>
+    <string name="sin_fotos">Aún nadie ha subido fotos.\n ¡Sé el primero en poner onda!</string>
 </resources>
