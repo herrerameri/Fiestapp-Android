@@ -8,15 +8,16 @@
     <string name="facebook_app_id">209586026220608</string>
     <string name="fb_login_protocol_scheme">fb209586026220608</string>
 
-    <!-- MIS FIESTAS -->
+    <!-- TITULOS -->
     <string name="mis_fiestas">Mis fiestas</string>
+    <string name="galeria">Galería</string>
 
     <!-- FIESTA -->
     <string name="dias_faltantes">DÍAS</string>
     <string name="invitados">INVITADOS</string>
     <string name="fotos">FOTOS</string>
     <string name="mas_info">+ INFO</string>
-    <string name="ver_galeria">VER GALERÍA</string>
+    <string name="ver_galeria">GALERÍA</string>
     <string name="subir_foto">SUBIR FOTO</string>
     <string name="proponer_cancion">PROPONER CANCIÓN</string>
     <string name="que_opinion_musica">¿Que opinás sobre la música?</string>

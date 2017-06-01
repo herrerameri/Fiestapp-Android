@@ -13,6 +13,7 @@ public class FotoModel implements Serializable{
     public String Descripcion;
     public String FechaHora;
     public String Imagen;
+    public String Usuario;
 
     public void setKey(String key){
         this.key = key;

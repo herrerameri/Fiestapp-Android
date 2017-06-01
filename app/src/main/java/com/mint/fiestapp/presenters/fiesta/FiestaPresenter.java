@@ -12,6 +12,8 @@ import com.mint.fiestapp.models.entidades.FiestaModel;
 import com.mint.fiestapp.models.entidades.FotoModel;
 import com.mint.fiestapp.models.fotos.FotosModel;
 import com.mint.fiestapp.models.fotos.IFotosModel;
+import com.mint.fiestapp.presenters.fotos.FotosPresenter;
+import com.mint.fiestapp.presenters.fotos.IFotosPresenter;
 import com.mint.fiestapp.views.IActivity;
 import com.mint.fiestapp.views.fiesta.FiestaActivity;
 import com.mint.fiestapp.views.fiesta.FotosView;
@@ -19,7 +21,7 @@ import com.mint.fiestapp.views.fiesta.IFiestaActivity;
 
 import java.util.List;
 
-public class FiestaPresenter implements IFiestaPresenter, FotosModel.IFotosModelCallback {
+public class FiestaPresenter implements IFiestaPresenter, FotosModel.IFotosModelCallback, FotosView.IFotosViewClickListener {
 
     IFotosModel fotosModel = new FotosModel(this);
     IFiestaActivity activity;
@@ -107,7 +109,7 @@ public class FiestaPresenter implements IFiestaPresenter, FotosModel.IFotosModel
         {
             case ASISTENCIA:
             case GALERIA:
-                viewFotos = new FotosView();
+                viewFotos = new FotosView(this);
                 fotosModel.obtenerFotos(8, model.key);
                 return viewFotos.getLayout(contexto);
             case MENU:
@@ -115,11 +117,15 @@ public class FiestaPresenter implements IFiestaPresenter, FotosModel.IFotosModel
             case VESTIMENTA:
             case REGALOS:
             case MUSICA:
-            default:
         }
-        return null;
+
+        // TODO borrar este default
+        viewFotos = new FotosView(this);
+        fotosModel.obtenerFotos(8, model.key);
+        return viewFotos.getLayout(contexto);
     }
 
+    //region FotosModel.IFotosModelCallback,
     @Override
     public void mostrarFotos(List<FotoModel> modelo) {
         viewFotos.setFotos(modelo);
@@ -127,6 +133,22 @@ public class FiestaPresenter implements IFiestaPresenter, FotosModel.IFotosModel
 
     @Override
     public void mostrarError(String mensaje) {
+        // TODO
+    }
+    //endregion
+
+
+    //region FotosView.IFotosViewClickListener
+    @Override
+    public void verGaleriaClickCallback() {
+        IFotosPresenter fotosPresenter = new FotosPresenter();
+        fotosPresenter.setKeyFiesta(model.key);
+        fotosPresenter.iniciarActivity(contexto);
+    }
+
+    @Override
+    public void subirFotoClickCallback() {
 
     }
+    //endregion
 }

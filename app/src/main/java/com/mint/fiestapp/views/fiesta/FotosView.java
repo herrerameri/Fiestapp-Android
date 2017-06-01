@@ -2,16 +2,16 @@ package com.mint.fiestapp.views.fiesta;
 
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.mint.fiestapp.R;
 import com.mint.fiestapp.models.entidades.FotoModel;
+import com.mint.fiestapp.services.fotos.IFotosService;
 import com.mint.fiestapp.views.custom.ImageSquareTransform;
 import com.squareup.picasso.Picasso;
 
@@ -19,23 +19,67 @@ import java.util.List;
 
 public class FotosView {
 
+    public interface IFotosViewClickListener{
+        void verGaleriaClickCallback();
+        void subirFotoClickCallback();
+    }
+
     private View layout;
     private Button btnVerGaleria;
+    private Button btnSubirFoto;
     private LinearLayout linFotosFiesta;
     private LinearLayout linSinFotos;
     private HorizontalScrollView scrConFotos;
     private LinearLayout pgbCargando;
     private Context contexto;
 
+    private IFotosViewClickListener listener;
+    public FotosView(IFotosViewClickListener listener){
+        this.listener = listener;
+    }
+
     public View getLayout(Context contexto){
         this.contexto = contexto;
         layout = LayoutInflater.from(contexto).inflate(R.layout.activity_fiesta_fotos, null, false);
+        binding();
+        eventos();
+        return layout;
+    }
+
+    private void binding(){
         linSinFotos = (LinearLayout) layout.findViewById(R.id.linSinFotos);
         scrConFotos = (HorizontalScrollView) layout.findViewById(R.id.scrConFotos);
         linFotosFiesta = (LinearLayout)layout.findViewById(R.id.linFotosFiesta);
         btnVerGaleria = (Button) layout.findViewById(R.id.btnVerGaleria);
+        btnSubirFoto = (Button) layout.findViewById(R.id.btnSubirFoto);
         pgbCargando = (LinearLayout) layout.findViewById(R.id.pgbCargando);
-        return layout;
+    }
+
+    private void eventos(){
+        verGaleria();
+        subirFoto();
+    }
+
+    private void verGaleria(){
+        layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.verGaleriaClickCallback();
+            }});
+        btnVerGaleria.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            listener.verGaleriaClickCallback();
+        }});
+    }
+
+    private void subirFoto(){
+        btnVerGaleria.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.subirFotoClickCallback();
+            }
+        });
     }
 
     public void setFotos(List<FotoModel> fotos){

@@ -16,7 +16,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class MisFiestasAdapter extends RecyclerView.Adapter<MisFiestasAdapter.ViewHolder> {
+public class MisFiestasAdapter extends RecyclerView.Adapter<MisFiestasAdapter.FiestaViewHolder> {
     List<FiestaModel> datos;
     MisFiestasAdapter.OnFiestaClickListener listener;
     static Context context;
@@ -25,12 +25,12 @@ public class MisFiestasAdapter extends RecyclerView.Adapter<MisFiestasAdapter.Vi
         void onFiestaClick(Context context, FiestaModel item);
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public static class FiestaViewHolder extends RecyclerView.ViewHolder {
         public CustomTextView texNombre;
         public CustomTextView texDetalle;
         public ImageView imgFiesta;
 
-        public ViewHolder(View view) {
+        public FiestaViewHolder(View view) {
             super(view);
             texNombre = (CustomTextView) view.findViewById(R.id.texNombre);
             texDetalle = (CustomTextView) view.findViewById(R.id.texDetalle);
@@ -53,15 +53,15 @@ public class MisFiestasAdapter extends RecyclerView.Adapter<MisFiestasAdapter.Vi
     }
 
     @Override
-    public MisFiestasAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public FiestaViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         CardView view = (CardView) LayoutInflater.from(parent.getContext()).inflate(R.layout.card_fiesta, parent, false);
-        ViewHolder vh = new ViewHolder(view);
+        FiestaViewHolder vh = new FiestaViewHolder(view);
 
         return vh;
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder view, int position) {
+    public void onBindViewHolder(FiestaViewHolder view, int position) {
         view.texNombre.setText(datos.get(position).Nombre);
         view.texDetalle.setText(datos.get(position).FechaHora());
         Picasso.with(context).load(datos.get(position).Imagen)

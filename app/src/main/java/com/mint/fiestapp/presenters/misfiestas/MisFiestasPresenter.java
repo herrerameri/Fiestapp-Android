@@ -47,6 +47,7 @@ public class MisFiestasPresenter implements IMisFiestasPresenter, MisFiestasMode
         model.obtenerFiestas();
     }
 
+    //region MisFiestasModel.IMisFiestasModelCallback
     @Override
     public void mostrarFiestas(List<FiestaModel> modelo){
         FiestaClickListener listener = new FiestaClickListener();
@@ -57,4 +58,5 @@ public class MisFiestasPresenter implements IMisFiestasPresenter, MisFiestasMode
     public void mostrarError(String mensaje){
         activity.mostrarError(mensaje);
     }
+    //endregion
 }

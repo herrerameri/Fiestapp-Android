@@ -23,7 +23,7 @@
             <pl.droidsonroids.gif.GifTextView
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
-                android:background="@drawable/load"
+                android:background="@drawable/bubble"
                 />
 
         </LinearLayout>
@@ -102,6 +102,7 @@
                     android:textColor="@color/subtitles" />
 
                 <Button
+                    android:id="@+id/btnSubirFoto"
                     style="@style/FlatButton"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/height_flat_button"

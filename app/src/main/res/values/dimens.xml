@@ -7,7 +7,7 @@
     <dimen name="between_cards">8dp</dimen>
     <dimen name="margin_bottom_nav">50dp</dimen>
     <dimen name="little_gap">5dp</dimen>
-    <dimen name="height_flat_button">35dp</dimen>
+    <dimen name="height_flat_button">40dp</dimen>
 
     <!-- Fuente -->
     <dimen name="fontsize_title">16sp</dimen>
