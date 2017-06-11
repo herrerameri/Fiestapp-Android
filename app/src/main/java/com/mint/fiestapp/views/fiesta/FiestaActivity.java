@@ -40,8 +40,9 @@ public class FiestaActivity extends BaseActivity implements IFiestaActivity, OnM
     @BindView(R.id.texFecha) TextView texFecha;
     @BindView(R.id.texHora) TextView texHora;
     @BindView(R.id.texNombreUbicacion) TextView texNombreUbicacion;
-    @BindView(R.id.mapUbicacionFiesta) SupportMapFragment frgMapUbicacionFiesta;
     //endregion
+
+    static SupportMapFragment frgMapUbicacionFiesta;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -57,6 +58,7 @@ public class FiestaActivity extends BaseActivity implements IFiestaActivity, OnM
     @Override
     public void binding(){
         ButterKnife.bind(this);
+        frgMapUbicacionFiesta = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapUbicacionFiesta);
         frgMapUbicacionFiesta.getMapAsync(this);
     }
 
