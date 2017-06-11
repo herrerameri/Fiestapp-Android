@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import com.mint.fiestapp.comun.IntentKeys;
 import com.mint.fiestapp.models.entidades.FotoModel;
+import com.mint.fiestapp.models.entidades.UsuarioModel;
 import com.mint.fiestapp.models.fotos.FotosModel;
 import com.mint.fiestapp.models.fotos.IFotosModel;
 import com.mint.fiestapp.presenters.misfiestas.FiestaClickListener;
@@ -18,6 +19,7 @@ import java.util.List;
 public class FotosPresenter implements IFotosPresenter, FotosModel.IFotosModelCallback, FotosAdapter.OnFotoClickListener {
 
     IFotosModel fotosModel = new FotosModel(this);
+    FotosAdapter adapterFotos;
     IFotosActivity activity;
     Context contexto;
     String keyFiesta;
@@ -48,18 +50,44 @@ public class FotosPresenter implements IFotosPresenter, FotosModel.IFotosModelCa
 
     @Override
     public void obtenerFotos(){
-        fotosModel.obtenerFotos(8, keyFiesta);
+        activity.mostrarProgreso();
+        fotosModel.obtenerFotos(activity.PAGE_SIZE, activity.getKeyUltimaFoto(), keyFiesta);
     }
 
-    //region FotosModel.IFotosModelCallback,
+    @Override
+    public void obtenerMasFotos(){
+        activity.mostrarProgreso();
+        fotosModel.obtenerFotos(activity.PAGE_SIZE, activity.getKeyUltimaFoto(), keyFiesta);
+    }
+
+    //region FotosModel.IFotosModelCallback
     @Override
     public void mostrarFotos(List<FotoModel> modelo) {
-        activity.mostrarFotos(new FotosAdapter(modelo, contexto, this));
+        activity.ocultarProgreso();
+        if(modelo.size() > 0){
+            activity.setKeyUltimaFoto(modelo.get(0).key);
+        }
+        if(adapterFotos == null){
+            adapterFotos = new FotosAdapter(modelo, contexto, this);
+            activity.mostrarFotos(adapterFotos);
+        }
+        else{
+            if(modelo.size() < activity.PAGE_SIZE){
+                activity.setUltimaPagina(true);
+            }
+            adapterFotos.addDatos(modelo);
+        }
     }
 
     @Override
     public void mostrarError(String mensaje) {
+        activity.ocultarProgreso();
         // TODO
+    }
+
+    @Override
+    public void setUsuariosFoto(UsuarioModel usuario) {
+        adapterFotos.setUsuario(usuario.Id, usuario.Nombre);
     }
     //endregion
 

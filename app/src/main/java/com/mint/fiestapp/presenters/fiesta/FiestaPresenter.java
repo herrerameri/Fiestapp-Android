@@ -10,6 +10,7 @@ import com.mint.fiestapp.R;
 import com.mint.fiestapp.comun.IntentKeys;
 import com.mint.fiestapp.models.entidades.FiestaModel;
 import com.mint.fiestapp.models.entidades.FotoModel;
+import com.mint.fiestapp.models.entidades.UsuarioModel;
 import com.mint.fiestapp.models.fotos.FotosModel;
 import com.mint.fiestapp.models.fotos.IFotosModel;
 import com.mint.fiestapp.presenters.fotos.FotosPresenter;
@@ -110,7 +111,7 @@ public class FiestaPresenter implements IFiestaPresenter, FotosModel.IFotosModel
             case ASISTENCIA:
             case GALERIA:
                 viewFotos = new FotosView(this);
-                fotosModel.obtenerFotos(8, model.key);
+                fotosModel.obtenerFotos(8, "", model.key);
                 return viewFotos.getLayout(contexto);
             case MENU:
             case MEGUSTAS:
@@ -121,7 +122,7 @@ public class FiestaPresenter implements IFiestaPresenter, FotosModel.IFotosModel
 
         // TODO borrar este default
         viewFotos = new FotosView(this);
-        fotosModel.obtenerFotos(8, model.key);
+        fotosModel.obtenerFotos(8, "", model.key);
         return viewFotos.getLayout(contexto);
     }
 
@@ -133,6 +134,11 @@ public class FiestaPresenter implements IFiestaPresenter, FotosModel.IFotosModel
 
     @Override
     public void mostrarError(String mensaje) {
+        // TODO
+    }
+
+    @Override
+    public void setUsuariosFoto(UsuarioModel usuario) {
         // TODO
     }
     //endregion

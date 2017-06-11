@@ -9,30 +9,67 @@
         android:id="@+id/linActionBar"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:gravity="center"
-        android:background="@drawable/gradiente">
+        android:background="@drawable/gradiente"
+        android:gravity="center">
 
         <com.mint.fiestapp.views.custom.CustomTextView
-            app:customFont="UBUNTU_NORMAL"
-            android:textSize="@dimen/fontsize_title"
-            android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/galeria"
             android:textColor="@color/white"
-            android:text="@string/galeria"/>
+            android:textSize="@dimen/fontsize_title"
+            app:customFont="UBUNTU_NORMAL" />
     </LinearLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/lisFotos"
+    <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    </android.support.v7.widget.RecyclerView>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/lisFotos"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/nuevaFoto"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:background="@drawable/gradiente"
-        android:src="@mipmap/ic_camera_alt"/>
+        </android.support.v7.widget.RecyclerView>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fabCamara"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginBottom="90dp"
+            android:layout_gravity="bottom|end"
+            android:layout_marginRight="18dp"
+            android:visibility="invisible"
+            app:elevation="6dp"
+            app:backgroundTint="@color/colorPrimary"
+            app:pressedTranslationZ="12dp"
+            android:src="@mipmap/ic_camera_alt" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fabNuevaFoto"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="bottom|end"
+            app:elevation="6dp"
+            app:backgroundTint="@color/colorAccent"
+            app:pressedTranslationZ="12dp"
+            android:layout_margin="18dp"
+            android:layout_marginBottom="90dp"
+            android:src="@mipmap/ic_add" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fabGaleria"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="bottom|end"
+            android:layout_marginBottom="150dp"
+            android:layout_marginRight="18dp"
+            android:src="@mipmap/ic_insert_photo"
+            android:visibility="invisible"
+            app:backgroundTint="@color/fucsia"
+            app:elevation="6dp"
+            app:pressedTranslationZ="12dp" />
+
+    </android.support.design.widget.CoordinatorLayout>
 </LinearLayout>

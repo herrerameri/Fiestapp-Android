@@ -120,4 +120,7 @@ public class FiestaActivity extends BaseActivity implements IFiestaActivity, OnM
 
     @Override
     public void mostrarProgreso(){}
+
+    @Override
+    public void ocultarProgreso(){}
 }

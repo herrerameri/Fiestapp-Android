@@ -61,11 +61,6 @@ public class FotosView {
     }
 
     private void verGaleria(){
-        layout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                listener.verGaleriaClickCallback();
-            }});
         btnVerGaleria.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,7 +69,7 @@ public class FotosView {
     }
 
     private void subirFoto(){
-        btnVerGaleria.setOnClickListener(new View.OnClickListener() {
+        btnSubirFoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 listener.subirFotoClickCallback();

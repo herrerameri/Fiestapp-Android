@@ -8,4 +8,5 @@ import com.mint.fiestapp.presenters.IPresenter;
 public interface IFotosPresenter extends IPresenter {
     void setKeyFiesta(String key);
     void obtenerFotos();
+    void obtenerMasFotos();
 }

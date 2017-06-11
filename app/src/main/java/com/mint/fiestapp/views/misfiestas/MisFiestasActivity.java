@@ -138,6 +138,9 @@ public class MisFiestasActivity extends BaseActivity implements IMisFiestasActiv
     @Override
     public void mostrarProgreso(){}
 
+    @Override
+    public void ocultarProgreso(){}
+
     public void logOut() {
         LoginManager.getInstance().logOut();
         // GO TO LOGIN

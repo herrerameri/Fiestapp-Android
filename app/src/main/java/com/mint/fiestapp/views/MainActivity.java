@@ -31,7 +31,7 @@ public class MainActivity extends BaseActivity  {
     CallbackManager callbackManager;
     private FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener firebaseAuthListener;
-
+    private boolean isInit = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -115,12 +115,18 @@ public class MainActivity extends BaseActivity  {
     }
 
     private void iniciarApp(){
-        new Handler().postDelayed(new Runnable(){
-            public void run(){
-                IMisFiestasPresenter misFiestasPresenter = new MisFiestasPresenter();
-                misFiestasPresenter.iniciarActivity(MainActivity.this);
-                finish();
-            };
-        }, DURACION_SPLASH);
+        if(!isInit){
+            isInit = true;
+            new Handler().postDelayed(new Runnable(){
+                public void run(){
+                    if (firebaseAuthListener != null) {
+                        firebaseAuth.removeAuthStateListener(firebaseAuthListener);
+                    }
+                    IMisFiestasPresenter misFiestasPresenter = new MisFiestasPresenter();
+                    misFiestasPresenter.iniciarActivity(MainActivity.this);
+                    finish();
+                };
+            }, DURACION_SPLASH);
+        }
     }
 }
