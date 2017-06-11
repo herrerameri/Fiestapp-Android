@@ -21,22 +21,27 @@ import com.mint.fiestapp.views.BaseActivity;
 import com.mint.fiestapp.views.custom.ImageCircleTransform;
 import com.squareup.picasso.Picasso;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 
 public class FiestaActivity extends BaseActivity implements IFiestaActivity, OnMapReadyCallback {
 
     IFiestaPresenter presenter;
-    private LinearLayout linOpcionesFiesta;
-    private ImageView imgFotoFiesta;
-    private TextView texTitulo;
-    private TextView texDescripcion;
-    private TextView texCantidadInvitados;
-    private TextView texCantidadFotos;
-    private TextView texCantidadDias;
 
-    private TextView texFecha;
-    private TextView texHora;
-    private TextView texNombreUbicacion;
-    private static SupportMapFragment frgMapUbicacionFiesta;
+    //region Controles
+    @BindView(R.id.linOpcionesFiesta) LinearLayout linOpcionesFiesta;
+    @BindView(R.id.imgFotoFiesta) ImageView imgFotoFiesta;
+    @BindView(R.id.texTitulo) TextView texTitulo;
+    @BindView(R.id.texDescripcion) TextView texDescripcion;
+    @BindView(R.id.texCantidadInvitados) TextView texCantidadInvitados;
+    @BindView(R.id.texCantidadFotos) TextView texCantidadFotos;
+    @BindView(R.id.texCantidadDias) TextView texCantidadDias;
+    @BindView(R.id.texFecha) TextView texFecha;
+    @BindView(R.id.texHora) TextView texHora;
+    @BindView(R.id.texNombreUbicacion) TextView texNombreUbicacion;
+    @BindView(R.id.mapUbicacionFiesta) SupportMapFragment frgMapUbicacionFiesta;
+    //endregion
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -51,18 +56,7 @@ public class FiestaActivity extends BaseActivity implements IFiestaActivity, OnM
 
     @Override
     public void binding(){
-        linOpcionesFiesta = (LinearLayout)findViewById(R.id.linOpcionesFiesta);
-        texTitulo = (TextView)findViewById(R.id.texTitulo);
-        texDescripcion = (TextView)findViewById(R.id.texDescripcion);
-        texCantidadDias = (TextView)findViewById(R.id.texCantidadDias);
-        texCantidadFotos = (TextView)findViewById(R.id.texCantidadFotos);
-        texCantidadInvitados = (TextView)findViewById(R.id.texCantidadInvitados);
-        imgFotoFiesta = (ImageView)findViewById(R.id.imgFotoFiesta);
-
-        texFecha = (TextView)findViewById(R.id.texFecha);
-        texHora = (TextView)findViewById(R.id.texHora);
-        texNombreUbicacion = (TextView)findViewById(R.id.texNombreUbicacion);
-        frgMapUbicacionFiesta = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapUbicacionFiesta);
+        ButterKnife.bind(this);
         frgMapUbicacionFiesta.getMapAsync(this);
     }
 
@@ -92,8 +86,7 @@ public class FiestaActivity extends BaseActivity implements IFiestaActivity, OnM
 
     private void iniciarFuncionalidadesFiesta(){
         int totalFuncionalidades = presenter.getTotalFuncionalidades();
-        int indice = 0;
-        for(indice = 0; indice < totalFuncionalidades; indice++){
+        for(int indice = 0; indice < totalFuncionalidades; indice++){
             linOpcionesFiesta.addView(presenter.getLayoutFuncionalidad(indice));
         }
     }

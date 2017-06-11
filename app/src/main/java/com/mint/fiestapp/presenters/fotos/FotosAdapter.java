@@ -17,6 +17,9 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class FotosAdapter extends RecyclerView.Adapter<FotosAdapter.FotoViewHolder> {
 
     List<FotoModel> datos;
@@ -28,21 +31,16 @@ public class FotosAdapter extends RecyclerView.Adapter<FotosAdapter.FotoViewHold
     }
 
     public static class FotoViewHolder extends RecyclerView.ViewHolder {
-        public ImageView imgFoto;
-        public ImageView imgUsuario;
-        public ImageView imgReaccion;
-        public CustomTextView texNombreUsuario;
-        public CustomTextView texReacciones;
-        public CustomTextView texDetalle;
+        @BindView(R.id.imgFoto) ImageView imgFoto;
+        @BindView(R.id.imgUsuario) ImageView imgUsuario;
+        @BindView(R.id.imgReaccion) ImageView imgReaccion;
+        @BindView(R.id.texNombreUsuario) CustomTextView texNombreUsuario;
+        @BindView(R.id.texReacciones) CustomTextView texReacciones;
+        @BindView(R.id.texDetalle) CustomTextView texDetalle;
 
         public FotoViewHolder(View view) {
             super(view);
-            imgFoto = (ImageView) view.findViewById(R.id.imgFoto);
-            imgUsuario = (ImageView) view.findViewById(R.id.imgUsuario);
-            imgReaccion = (ImageView) view.findViewById(R.id.imgReaccion);
-            texReacciones = (CustomTextView) view.findViewById(R.id.texReacciones);
-            texNombreUsuario = (CustomTextView) view.findViewById(R.id.texNombreUsuario);
-            texDetalle = (CustomTextView) view.findViewById(R.id.texDetalle);
+            ButterKnife.bind(this, view);
         }
 
         public void bind(final FotoModel item, final FotosAdapter.OnFotoClickListener  listener) {
@@ -76,7 +74,7 @@ public class FotosAdapter extends RecyclerView.Adapter<FotosAdapter.FotoViewHold
         view.texReacciones.setText(item.Reacciones());
         view.texDetalle.setText(item.FechaHora());
         if(item.YoReaccione()){
-            Picasso.with(context).load(R.mipmap.ic_room).into(view.imgReaccion);
+            view.imgReaccion.setColorFilter(context.getResources().getColor(R.color.fucsia));
         }
         Picasso.with(context).load(Facebook.getFotoPerfil(item.Usuario.Id)).transform(new ImageCircleTransform()).into(view.imgUsuario);
         view.bind(item, listener);

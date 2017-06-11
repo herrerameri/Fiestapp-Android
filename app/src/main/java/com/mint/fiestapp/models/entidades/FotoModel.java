@@ -15,6 +15,7 @@ public class FotoModel implements Serializable{
     public String FechaHora;
     public String Descripcion;
     public String Imagen;
+    public byte[] Bytes;
     public HashMap<String, Boolean> Reacciones;
     public UsuarioModel Usuario;
     public String key;

@@ -16,6 +16,9 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class MisFiestasAdapter extends RecyclerView.Adapter<MisFiestasAdapter.FiestaViewHolder> {
     List<FiestaModel> datos;
     MisFiestasAdapter.OnFiestaClickListener listener;
@@ -26,15 +29,13 @@ public class MisFiestasAdapter extends RecyclerView.Adapter<MisFiestasAdapter.Fi
     }
 
     public static class FiestaViewHolder extends RecyclerView.ViewHolder {
-        public CustomTextView texNombre;
-        public CustomTextView texDetalle;
-        public ImageView imgFiesta;
+        @BindView(R.id.texNombre) CustomTextView texNombre;
+        @BindView(R.id.texDetalle)  CustomTextView texDetalle;
+        @BindView(R.id.imgFiesta)  ImageView imgFiesta;
 
         public FiestaViewHolder(View view) {
             super(view);
-            texNombre = (CustomTextView) view.findViewById(R.id.texNombre);
-            texDetalle = (CustomTextView) view.findViewById(R.id.texDetalle);
-            imgFiesta = (ImageView) view.findViewById(R.id.imgFiesta);
+            ButterKnife.bind(this, view);
         }
 
         public void bind(final FiestaModel item, final MisFiestasAdapter.OnFiestaClickListener listener) {

@@ -1,5 +1,6 @@
 package com.mint.fiestapp.presenters.fotos;
 
+import android.graphics.Bitmap;
 import android.view.View;
 
 import com.mint.fiestapp.models.entidades.FiestaModel;
@@ -9,4 +10,6 @@ public interface IFotosPresenter extends IPresenter {
     void setKeyFiesta(String key);
     void obtenerFotos();
     void obtenerMasFotos();
+
+    void subirFotos(byte[] nuevaFoto);
 }

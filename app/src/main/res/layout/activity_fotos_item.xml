@@ -33,7 +33,7 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:orientation="vertical"
-                android:layout_weight="0.6"
+                android:layout_weight="0.5"
                 android:gravity="center_vertical"
                 android:layout_height="match_parent">
 
@@ -59,14 +59,14 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:orientation="horizontal"
-                android:layout_weight="0.2"
+                android:layout_weight="0.3"
                 android:gravity="center_vertical"
                 android:layout_height="match_parent">
 
                 <ImageView
                     android:id="@+id/imgReaccion"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:src="@mipmap/ic_favorite" />
 
                 <com.mint.fiestapp.views.custom.CustomTextView
@@ -74,9 +74,9 @@
                     android:layout_width="wrap_content"
                     customAttrs:customFont="UBUNTU_REGULAR"
                     android:textColor="@color/titles"
-                    android:textSize="10sp"
+                    android:textSize="12sp"
                     android:layout_height="wrap_content"
-                    android:text="3"/>
+                    android:text=""/>
             </LinearLayout>
         </LinearLayout>
 </LinearLayout>

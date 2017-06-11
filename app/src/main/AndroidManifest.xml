@@ -20,6 +20,7 @@
         <activity android:name=".views.misfiestas.MisFiestasActivity"/>
         <activity android:name=".views.fiesta.FiestaActivity"/>
         <activity android:name=".views.fotos.FotosActivity"/>
+        <activity android:name=".views.fotos.SubirFotosActivity"/>
 
         <!--Si no tiene instalado Facebook, abre navegador-->
         <activity

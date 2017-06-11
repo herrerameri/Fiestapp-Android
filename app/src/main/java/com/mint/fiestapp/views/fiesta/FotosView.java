@@ -17,6 +17,9 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class FotosView {
 
     public interface IFotosViewClickListener{
@@ -25,13 +28,16 @@ public class FotosView {
     }
 
     private View layout;
-    private Button btnVerGaleria;
-    private Button btnSubirFoto;
-    private LinearLayout linFotosFiesta;
-    private LinearLayout linSinFotos;
-    private HorizontalScrollView scrConFotos;
-    private LinearLayout pgbCargando;
-    private Context contexto;
+    Context contexto;
+
+    //region Controles
+    @BindView(R.id.btnVerGaleria) Button btnVerGaleria;
+    @BindView(R.id.btnSubirFoto)  Button btnSubirFoto;
+    @BindView(R.id.linFotosFiesta)  LinearLayout linFotosFiesta;
+    @BindView(R.id.linSinFotos)  LinearLayout linSinFotos;
+    @BindView(R.id.scrConFotos)  HorizontalScrollView scrConFotos;
+    @BindView(R.id.pgbCargando)  LinearLayout pgbCargando;
+    //endregion
 
     private IFotosViewClickListener listener;
     public FotosView(IFotosViewClickListener listener){
@@ -47,12 +53,7 @@ public class FotosView {
     }
 
     private void binding(){
-        linSinFotos = (LinearLayout) layout.findViewById(R.id.linSinFotos);
-        scrConFotos = (HorizontalScrollView) layout.findViewById(R.id.scrConFotos);
-        linFotosFiesta = (LinearLayout)layout.findViewById(R.id.linFotosFiesta);
-        btnVerGaleria = (Button) layout.findViewById(R.id.btnVerGaleria);
-        btnSubirFoto = (Button) layout.findViewById(R.id.btnSubirFoto);
-        pgbCargando = (LinearLayout) layout.findViewById(R.id.pgbCargando);
+        ButterKnife.bind(layout);
     }
 
     private void eventos(){

@@ -35,25 +35,27 @@ import com.mint.fiestapp.presenters.misfiestas.IMisFiestasPresenter;
 import com.mint.fiestapp.presenters.misfiestas.MisFiestasPresenter;
 import com.mint.fiestapp.views.BaseActivity;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 import static android.os.Build.*;
 
 
 public class MisFiestasActivity extends BaseActivity implements IMisFiestasActivity{
 
     IMisFiestasPresenter presenter;
-    private RecyclerView lisFiestas;
+
+    //region Controles
+    @BindView(R.id.lisFiestas) RecyclerView lisFiestas;
+    @BindView(R.id.navMisFiestas) BottomNavigationView navMisFiestas;
+    BottomNavigationMenuView navMenu;
+    //endregion
+
     private RecyclerView.LayoutManager layoutManager;
-    private BottomNavigationView navMisFiestas;
-    private BottomNavigationMenuView navMenu;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (VERSION.SDK_INT >= VERSION_CODES.KITKAT) {
-            Window w = getWindow();
-            w.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-            w.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-        }
         setContentView(R.layout.activity_misfiestas);
         if(getIntent().getExtras() != null){
             iniciarPresenter((IMisFiestasPresenter)getIntent().getExtras().getSerializable(IntentKeys.PRESENTER));
@@ -77,7 +79,7 @@ public class MisFiestasActivity extends BaseActivity implements IMisFiestasActiv
 
     @Override
     public void binding(){
-        lisFiestas = (RecyclerView) findViewById(R.id.lisFiestas);
+        ButterKnife.bind(this);
     }
 
     @Override
@@ -92,8 +94,6 @@ public class MisFiestasActivity extends BaseActivity implements IMisFiestasActiv
     }
 
     private void iniciarBottomNav(){
-        navMisFiestas = (BottomNavigationView) findViewById(R.id.navMisFiestas);
-
         // BottomNav tiene hardcode 24dp para el alto de los íconos
         navMenu = (BottomNavigationMenuView) navMisFiestas.getChildAt(0);
         for (int i = 0; i < navMenu.getChildCount(); i++) {

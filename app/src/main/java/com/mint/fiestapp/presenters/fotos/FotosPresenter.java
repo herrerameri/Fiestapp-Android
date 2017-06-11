@@ -2,6 +2,7 @@ package com.mint.fiestapp.presenters.fotos;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 
 import com.mint.fiestapp.comun.IntentKeys;
@@ -9,7 +10,6 @@ import com.mint.fiestapp.models.entidades.FotoModel;
 import com.mint.fiestapp.models.entidades.UsuarioModel;
 import com.mint.fiestapp.models.fotos.FotosModel;
 import com.mint.fiestapp.models.fotos.IFotosModel;
-import com.mint.fiestapp.presenters.misfiestas.FiestaClickListener;
 import com.mint.fiestapp.views.IActivity;
 import com.mint.fiestapp.views.fotos.FotosActivity;
 import com.mint.fiestapp.views.fotos.IFotosActivity;
@@ -58,6 +58,13 @@ public class FotosPresenter implements IFotosPresenter, FotosModel.IFotosModelCa
     public void obtenerMasFotos(){
         activity.mostrarProgreso();
         fotosModel.obtenerFotos(activity.PAGE_SIZE, activity.getKeyUltimaFoto(), keyFiesta);
+    }
+
+    public void subirFotos(byte[] nuevaFoto){
+        ISubirFotosPresenter subirFotosPresenter = new SubirFotosPresenter();
+        subirFotosPresenter.setKeyFiesta(keyFiesta);
+        subirFotosPresenter.agregarFoto(nuevaFoto);
+        subirFotosPresenter.iniciarActivity(contexto);
     }
 
     //region FotosModel.IFotosModelCallback
