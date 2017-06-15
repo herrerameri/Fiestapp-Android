@@ -3,11 +3,36 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="@dimen/padding_text">
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/linActionBar"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@drawable/gradiente"
+        android:gravity="center">
+
+        <com.mint.fiestapp.views.custom.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/subir_fotos"
+            android:textColor="@color/white"
+            android:textSize="@dimen/fontsize_title"
+            app:customFont="UBUNTU_NORMAL" />
+    </LinearLayout>
+
+    <EditText
+        android:padding="@dimen/padding_text"
+        android:id="@+id/ediDescripcion"
+        android:lines="2"
+        android:hint="Descripción de las fotos"
+        android:layout_width="match_parent"
+        android:layout_height="100dp" />
 
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
+        android:padding="@dimen/padding_text"
         android:layout_height="match_parent">
 
         <HorizontalScrollView
@@ -21,12 +46,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:adjustViewBounds="true"
-                    android:src="@drawable/bonete"
-                    android:scaleType="centerCrop"
-                    android:layout_height="400dp" />
             </LinearLayout>
         </HorizontalScrollView>
 
@@ -43,4 +62,5 @@
             android:src="@mipmap/ic_check" />
 
     </android.support.design.widget.CoordinatorLayout>
+
 </LinearLayout>

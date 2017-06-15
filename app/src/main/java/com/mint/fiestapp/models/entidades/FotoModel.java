@@ -19,6 +19,11 @@ public class FotoModel implements Serializable{
     public HashMap<String, Boolean> Reacciones;
     public UsuarioModel Usuario;
     public String key;
+    public String keyFiesta;
+
+    public void setKey(String key){
+        this.key = key;
+    }
 
     public String Reacciones(){
         if(Reacciones == null)

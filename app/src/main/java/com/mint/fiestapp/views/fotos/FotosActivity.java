@@ -1,11 +1,15 @@
 package com.mint.fiestapp.views.fotos;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.FileProvider;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,6 +18,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
 import com.mint.fiestapp.R;
+import com.mint.fiestapp.comun.Imagenes;
 import com.mint.fiestapp.comun.IntentKeys;
 import com.mint.fiestapp.presenters.IPresenter;
 import com.mint.fiestapp.presenters.fotos.FotosAdapter;
@@ -21,6 +26,9 @@ import com.mint.fiestapp.presenters.fotos.IFotosPresenter;
 import com.mint.fiestapp.views.BaseActivity;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -91,14 +99,35 @@ public class FotosActivity extends BaseActivity implements IFotosActivity {
         }
     }
 
+    @OnClick(R.id.fabGaleria)
+    public void nuevaFotoGaleria(){
+        Intent intentNuevaFoto = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        if (intentNuevaFoto.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(intentNuevaFoto, REQUEST_FOTO_GALERIA);
+        }
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_FOTO_CAMARA && resultCode == RESULT_OK) {
+        if (requestCode == REQUEST_FOTO_CAMARA && resultCode == RESULT_OK && null != data) {
             Bitmap bmp = (Bitmap) data.getExtras().get("data");
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            bmp.compress(Bitmap.CompressFormat.PNG, 70, stream);
+            bmp.compress(Bitmap.CompressFormat.JPEG, 80, stream);
             byte[] byteArray = stream.toByteArray();
             presenter.subirFotos(byteArray);
+        }
+        if (requestCode == REQUEST_FOTO_GALERIA && resultCode == RESULT_OK && null != data) {
+            try{
+                final Uri imageUri = data.getData();
+                final InputStream imageStream = getContentResolver().openInputStream(imageUri);
+                Bitmap bmp = BitmapFactory.decodeStream(imageStream);
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                bmp.compress(Bitmap.CompressFormat.JPEG, 80, stream);
+                byte[] byteArray = stream.toByteArray();
+                presenter.subirFotos(byteArray);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 

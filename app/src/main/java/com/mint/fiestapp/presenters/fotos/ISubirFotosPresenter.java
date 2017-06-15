@@ -5,4 +5,6 @@ import com.mint.fiestapp.presenters.IPresenter;
 public interface ISubirFotosPresenter extends IPresenter {
     void setKeyFiesta(String key);
     void agregarFoto(byte[] bytesFoto);
+    void subirFotos(String descripcion);
+    void getPrimeraFoto();
 }

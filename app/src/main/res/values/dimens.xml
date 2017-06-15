@@ -25,4 +25,7 @@
     <dimen name="width_foto_fiesta">100dp</dimen>
     <dimen name="height_foto_fiesta">100dp</dimen>
 
+    <!-- Subit foto -->
+    <dimen name="width_subir_foto">400dp</dimen>
+    <dimen name="height_subir_foto">400dp</dimen>
 </resources>

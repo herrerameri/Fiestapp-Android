@@ -11,6 +11,7 @@
     <!-- TITULOS -->
     <string name="mis_fiestas">Mis fiestas</string>
     <string name="galeria">Galería</string>
+    <string name="subir_fotos">Subir Fotos</string>
 
     <!-- FIESTA -->
     <string name="dias_faltantes">DÍAS</string>
