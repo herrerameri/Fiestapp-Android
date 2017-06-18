@@ -1,6 +1,7 @@
 package com.mint.fiestapp.models.fotos;
 
 import com.mint.fiestapp.models.entidades.FotoModel;
+import com.mint.fiestapp.models.entidades.Respuesta;
 import com.mint.fiestapp.models.entidades.RespuestaLista;
 import com.mint.fiestapp.models.entidades.UsuarioModel;
 import com.mint.fiestapp.services.facebook.FacebookService;
@@ -16,12 +17,8 @@ import java.util.List;
 public class SubirFotosModel implements ISubirFotosModel, SubirFotosService.ISubirFotosServiceCallback {
     ISubirFotosService services = new SubirFotosService(this);
 
-    @Override
-    public void callbackSubirFotos(RespuestaLista<Object> respuesta) {
-
-    }
-
     public interface ISubirFotosModelCallback{
+        void callbackSubirFoto(boolean exito);
     }
 
     ISubirFotosModelCallback listener;
@@ -34,4 +31,10 @@ public class SubirFotosModel implements ISubirFotosModel, SubirFotosService.ISub
     public void subirFotos(List<FotoModel> modelo) {
         services.subirFotos(modelo);
     }
+
+    @Override
+    public void callbackSubirFotos(Respuesta<Object> respuesta) {
+        listener.callbackSubirFoto(respuesta.Exito);
+    }
+
 }

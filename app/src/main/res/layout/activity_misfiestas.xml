@@ -12,6 +12,7 @@
         android:background="@drawable/gradiente">
 
         <com.mint.fiestapp.views.custom.CustomTextView
+            android:id="@+id/texTitulo"
             app:customFont="UBUNTU_NORMAL"
             android:textSize="@dimen/fontsize_title"
             android:layout_marginTop="10dp"
@@ -19,6 +20,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/white"
             android:text="@string/mis_fiestas"/>
+
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView

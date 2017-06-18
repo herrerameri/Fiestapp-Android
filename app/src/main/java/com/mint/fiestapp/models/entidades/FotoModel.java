@@ -9,14 +9,16 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 public class FotoModel implements Serializable{
     public String FechaHora;
     public String Descripcion;
     public String Imagen;
     public byte[] Bytes;
-    public HashMap<String, Boolean> Reacciones;
+    public HashMap<String, UsuarioModel> Reacciones;
     public UsuarioModel Usuario;
     public String key;
     public String keyFiesta;
@@ -34,7 +36,15 @@ public class FotoModel implements Serializable{
     public boolean YoReaccione(){
         if(Reacciones == null)
             return false;
-        return Reacciones.containsKey(FirebaseAuth.getFacebookIdUsuarioAutenticado());
+        Iterator it = Reacciones.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry)it.next();
+            if(((UsuarioModel)pair.getValue()).Id.equals(FirebaseAuth.getFacebookIdUsuarioAutenticado()))
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     public String FechaHora(){

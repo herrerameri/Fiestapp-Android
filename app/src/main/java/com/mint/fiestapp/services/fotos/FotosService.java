@@ -2,18 +2,25 @@ package com.mint.fiestapp.services.fotos;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.mint.fiestapp.models.entidades.FotoModel;
+import com.mint.fiestapp.models.entidades.Respuesta;
 import com.mint.fiestapp.models.entidades.RespuestaLista;
+import com.mint.fiestapp.models.entidades.UsuarioModel;
 import com.mint.fiestapp.services.Servicios;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 public class FotosService extends Servicios implements IFotosService {
 
     public interface IFotosServiceCallback{
         void callbackObtenerFotos(RespuestaLista<FotoModel> respuesta);
+        void callbackAgregarReaccion(String keyFoto, Respuesta<HashMap<String, UsuarioModel>> respuesta);
+        void callbackQuitarReaccion(String keyFoto, Respuesta<String> respuesta);
     }
 
     IFotosServiceCallback listener;
@@ -24,7 +31,7 @@ public class FotosService extends Servicios implements IFotosService {
 
     @Override
     public void obtenerUltimasFotos(int cantidad, String keyFiesta){
-        fotosReference.child(keyFiesta).orderByKey().limitToLast(cantidad).addValueEventListener(
+        fotosReference.child(keyFiesta).orderByChild("FechaHora").limitToLast(cantidad).addValueEventListener(
             new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
@@ -35,6 +42,7 @@ public class FotosService extends Servicios implements IFotosService {
                     }
                     RespuestaLista<FotoModel> respuesta = new RespuestaLista<>();
                     respuesta.Exito = true;
+                    Collections.reverse(fotos);
                     respuesta.Modelo = fotos;
                     listener.callbackObtenerFotos(respuesta);
                 }
@@ -51,7 +59,7 @@ public class FotosService extends Servicios implements IFotosService {
 
     @Override
     public void obtenerPaginaFotos(int cantidad, String keyUltimaFoto,String keyFiesta){
-        fotosReference.child(keyFiesta).orderByKey().endAt(keyUltimaFoto).limitToLast(cantidad+1).addValueEventListener(
+        fotosReference.child(keyFiesta).orderByChild("FechaHora").limitToLast(cantidad+1).endAt(keyUltimaFoto).addValueEventListener(
                 new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -66,6 +74,7 @@ public class FotosService extends Servicios implements IFotosService {
                         }
                         RespuestaLista<FotoModel> respuesta = new RespuestaLista<>();
                         respuesta.Exito = true;
+                        Collections.reverse(fotos);
                         respuesta.Modelo = fotos;
                         listener.callbackObtenerFotos(respuesta);
 
@@ -79,5 +88,44 @@ public class FotosService extends Servicios implements IFotosService {
                         listener.callbackObtenerFotos(respuesta);
                     }
                 });
+    }
+
+    @Override
+    public void agregarReaccion(String keyFiesta, String keyFoto, String idUsuario){
+        Respuesta<HashMap<String, UsuarioModel>> respuesta = new Respuesta<>();
+        try
+        {
+            String key = fotosReference.child(keyFiesta).child(keyFoto).child("Reacciones").push().getKey();
+            UsuarioModel usuarioReaccion = new UsuarioModel(idUsuario,"");
+            fotosReference.child(keyFiesta).child(keyFoto).child("Reacciones").child(key).setValue(usuarioReaccion);
+
+            HashMap<String, UsuarioModel> reaccion = new HashMap<>();
+            reaccion.put(key, usuarioReaccion);
+            respuesta.Exito = true;
+            respuesta.Modelo = reaccion;
+        }
+        catch(Exception e){
+            respuesta.Exito = false;
+            respuesta.Mensaje = "Ocurrió un error al conectar con el servidor.";
+        }
+        listener.callbackAgregarReaccion(keyFoto, respuesta);
+    }
+
+
+    @Override
+    public void quitarReaccion(String keyFiesta, String keyFoto, String keyReaccion){
+        Respuesta<String> respuesta = new Respuesta<>();
+        try
+        {
+            fotosReference.child(keyFiesta).child(keyFoto).child("Reacciones").child(keyReaccion).removeValue();
+
+            respuesta.Exito = true;
+            respuesta.Modelo = keyReaccion;
+        }
+        catch(Exception e){
+            respuesta.Exito = false;
+            respuesta.Mensaje = "Ocurrió un error al conectar con el servidor.";
+        }
+        listener.callbackQuitarReaccion(keyFoto, respuesta);
     }
 }

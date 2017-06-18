@@ -13,13 +13,13 @@
         android:enabled="true"
         android:state_selected="false"
         android:title="@string/nueva_fiesta"
-        android:icon="@mipmap/ic_action_add_circle"
+        android:icon="@mipmap/ic_add_circle"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/action_notificaciones"
+        android:id="@+id/action_cerrar_sesion"
         android:enabled="true"
         android:state_selected="false"
-        android:title="@string/notificaciones"
-        android:icon="@mipmap/ic_action_notifications"
+        android:title="@string/cerrar_sesion"
+        android:icon="@mipmap/ic_exit_to_app"
         app:showAsAction="ifRoom" />
 </menu>

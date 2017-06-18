@@ -4,6 +4,7 @@
     <string name="eslogan">Por momentos aún mejores.</string>
     <string name="nueva_fiesta">Agregar fiesta</string>
     <string name="notificaciones">Notificaciones</string>
+    <string name="cerrar_sesion">Cerrar sesión</string>
 
     <string name="facebook_app_id">209586026220608</string>
     <string name="fb_login_protocol_scheme">fb209586026220608</string>
@@ -14,15 +15,20 @@
     <string name="subir_fotos">Subir Fotos</string>
 
     <!-- FIESTA -->
-    <string name="dias_faltantes">DÍAS</string>
+    <string name="dias_faltantes">DÍAS RESTANTES</string>
     <string name="invitados">INVITADOS</string>
     <string name="fotos">FOTOS</string>
     <string name="mas_info">+ INFO</string>
     <string name="ver_galeria">GALERÍA</string>
     <string name="subir_foto">SUBIR FOTO</string>
+    <string name="quien_gusta">¿QUIÉN TE GUSTA?</string>
     <string name="proponer_cancion">PROPONER CANCIÓN</string>
     <string name="que_opinion_musica">¿Que opinás sobre la música?</string>
     <string name="error_login">Ocurrió un error al conectar con Facebook.</string>
     <string name="cancelo_login">Se ha cancelado el inicio con Facebook.</string>
     <string name="sin_fotos">Aún nadie ha subido fotos.\n ¡Sé el primero en poner onda!</string>
+    <string name="sin_invitados">Aún ningún invitado se ha añadido a la fiesta.</string>
+
+    <!-- SUBIR FOTO -->
+    <string name="progreso_foto">Subiendo foto...</string>
 </resources>

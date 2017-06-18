@@ -87,6 +87,7 @@ public class FotosView {
         linFotosFiesta.removeAllViews();
 
         if(fotos.size() > 0){
+            linSinFotos.setVisibility(View.GONE);
             btnVerGaleria.setVisibility(View.VISIBLE);
             scrConFotos.setVisibility(View.VISIBLE);
             LinearLayout.LayoutParams layoutParamsImagen = obtenerParametrosImagen();
@@ -105,6 +106,7 @@ public class FotosView {
         else{
             linSinFotos.setVisibility(View.VISIBLE);
             scrConFotos.setVisibility(View.GONE);
+            btnVerGaleria.setVisibility(View.GONE);
         }
     }
 

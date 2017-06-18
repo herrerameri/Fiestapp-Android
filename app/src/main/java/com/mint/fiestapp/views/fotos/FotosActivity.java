@@ -1,5 +1,6 @@
 package com.mint.fiestapp.views.fotos;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -59,6 +60,7 @@ public class FotosActivity extends BaseActivity implements IFotosActivity {
     private String keyUltimaFoto = "";
     private static final int REQUEST_FOTO_CAMARA = 111;
     private static final int REQUEST_FOTO_GALERIA = 222;
+    private Uri imageUri;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -93,10 +95,13 @@ public class FotosActivity extends BaseActivity implements IFotosActivity {
 
     @OnClick(R.id.fabCamara)
     public void nuevaFotoCamara(){
-        Intent intentNuevaFoto = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (intentNuevaFoto.resolveActivity(getPackageManager()) != null) {
-            startActivityForResult(intentNuevaFoto, REQUEST_FOTO_CAMARA);
-        }
+        ContentValues values = new ContentValues();
+        values.put(MediaStore.Images.Media.TITLE, "Fiestapp");
+        imageUri = getContentResolver().insert(
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+        startActivityForResult(intent, REQUEST_FOTO_CAMARA);
     }
 
     @OnClick(R.id.fabGaleria)
@@ -109,12 +114,17 @@ public class FotosActivity extends BaseActivity implements IFotosActivity {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_FOTO_CAMARA && resultCode == RESULT_OK && null != data) {
-            Bitmap bmp = (Bitmap) data.getExtras().get("data");
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            bmp.compress(Bitmap.CompressFormat.JPEG, 80, stream);
-            byte[] byteArray = stream.toByteArray();
-            presenter.subirFotos(byteArray);
+        if (requestCode == REQUEST_FOTO_CAMARA && resultCode == RESULT_OK ) {
+            try {
+                Bitmap thumbnail = MediaStore.Images.Media.getBitmap(
+                        getContentResolver(), imageUri);
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                thumbnail.compress(Bitmap.CompressFormat.JPEG, 20, stream);
+                byte[] byteArray = stream.toByteArray();
+                presenter.subirFotos(byteArray);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         if (requestCode == REQUEST_FOTO_GALERIA && resultCode == RESULT_OK && null != data) {
             try{
@@ -122,7 +132,7 @@ public class FotosActivity extends BaseActivity implements IFotosActivity {
                 final InputStream imageStream = getContentResolver().openInputStream(imageUri);
                 Bitmap bmp = BitmapFactory.decodeStream(imageStream);
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                bmp.compress(Bitmap.CompressFormat.JPEG, 80, stream);
+                bmp.compress(Bitmap.CompressFormat.JPEG, 20, stream);
                 byte[] byteArray = stream.toByteArray();
                 presenter.subirFotos(byteArray);
             } catch (IOException e) {

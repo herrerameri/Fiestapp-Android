@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:customAttrs="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    customAttrs:cardUseCompatPadding="true"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="@dimen/padding_text">
+
+        <LinearLayout
+            android:id="@+id/pgbCargando"
+            android:background="@color/gray"
+            android:gravity="center"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <pl.droidsonroids.gif.GifTextView
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:background="@drawable/loader_gooey_liquid"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linSinInvitados"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="100dp"
+            android:weightSum="1">
+
+            <com.mint.fiestapp.views.custom.CustomTextView
+                customAttrs:customFont="UBUNTU_REGULAR"
+                android:gravity="center"
+                android:textColor="@color/subtitles"
+                android:layout_weight="0.7"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:text="@string/sin_invitados"/>
+
+            <LinearLayout
+                android:gravity="center"
+                android:layout_height="match_parent"
+                android:layout_weight="0.3"
+                android:layout_width="0dp">
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@drawable/me_gustas"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linInvitadosFiesta"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linFooterMeGustas"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="12dp"
+            android:gravity="bottom"
+            android:orientation="vertical">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/background" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:gravity="bottom|right"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnQuienGusta"
+                    style="@style/FlatButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/height_flat_button"
+                    android:text="@string/quien_gusta"
+                    android:textColor="@color/subtitles" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</android.support.v7.widget.CardView>

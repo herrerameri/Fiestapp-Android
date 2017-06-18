@@ -8,6 +8,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.mint.fiestapp.R;
 import com.mint.fiestapp.comun.IntentKeys;
@@ -97,8 +98,13 @@ public class SubirFotosActivity extends BaseActivity implements ISubirFotosActiv
     }
 
     @Override
-    public void mostrarProgreso() {
+    public void finishActivity(){
+        finish();
+    }
 
+    @Override
+    public void mostrarProgreso() {
+        Toast.makeText(this, getResources().getString(R.string.progreso_foto),Toast.LENGTH_LONG).show();
     }
 
     @Override

@@ -1,7 +1,10 @@
 package com.mint.fiestapp.comun;
 
 import android.content.Context;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Environment;
+import android.provider.MediaStore;
 
 import java.io.File;
 import java.io.IOException;

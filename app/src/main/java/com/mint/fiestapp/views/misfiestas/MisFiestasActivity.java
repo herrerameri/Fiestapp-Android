@@ -28,6 +28,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.login.LoginManager;
+import com.google.firebase.auth.FirebaseAuth;
 import com.mint.fiestapp.R;
 import com.mint.fiestapp.comun.IntentKeys;
 import com.mint.fiestapp.presenters.IPresenter;
@@ -116,8 +117,11 @@ public class MisFiestasActivity extends BaseActivity implements IMisFiestasActiv
                         case R.id.action_nuevafiesta:
 
                             break;
-                        case R.id.action_notificaciones:
-
+                        case R.id.action_cerrar_sesion:
+                            FirebaseAuth.getInstance().signOut();
+                            LoginManager.getInstance().logOut();
+                            presenter.volverALogin();
+                            finish();
                             break;
                     }
                     return false;
@@ -141,8 +145,4 @@ public class MisFiestasActivity extends BaseActivity implements IMisFiestasActiv
     @Override
     public void ocultarProgreso(){}
 
-    public void logOut() {
-        LoginManager.getInstance().logOut();
-        // GO TO LOGIN
-    }
 }

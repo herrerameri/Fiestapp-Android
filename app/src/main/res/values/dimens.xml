@@ -24,8 +24,10 @@
     <dimen name="margin_foto_fiesta">3dp</dimen>
     <dimen name="width_foto_fiesta">100dp</dimen>
     <dimen name="height_foto_fiesta">100dp</dimen>
+    <dimen name="width_foto_invitado">100dp</dimen>
+    <dimen name="height_foto_invitado">100dp</dimen>
 
-    <!-- Subit foto -->
+    <!-- Subir foto -->
     <dimen name="width_subir_foto">400dp</dimen>
     <dimen name="height_subir_foto">400dp</dimen>
 </resources>

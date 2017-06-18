@@ -72,6 +72,7 @@
                     android:background="@color/background"/>
 
                 <Button
+                    android:id="@+id/btnProponer"
                     android:layout_width="wrap_content"
                     android:text="@string/proponer_cancion"
                     android:layout_height="@dimen/height_flat_button"

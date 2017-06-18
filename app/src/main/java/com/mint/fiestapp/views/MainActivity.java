@@ -79,6 +79,7 @@ public class MainActivity extends BaseActivity  {
     }
 
     private void handleFacebookAccessToken(AccessToken token) {
+        ocultarLogin();
         AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
         firebaseAuth.signInWithCredential(credential).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override

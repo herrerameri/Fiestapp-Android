@@ -10,6 +10,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.UploadTask;
 import com.mint.fiestapp.models.entidades.FotoModel;
+import com.mint.fiestapp.models.entidades.Respuesta;
 import com.mint.fiestapp.models.entidades.RespuestaLista;
 import com.mint.fiestapp.models.entidades.UsuarioModel;
 import com.mint.fiestapp.services.Servicios;
@@ -23,7 +24,7 @@ public class SubirFotosService extends Servicios implements ISubirFotosService {
 
 
     public interface ISubirFotosServiceCallback{
-        void callbackSubirFotos(RespuestaLista<Object> respuesta);
+        void callbackSubirFotos(Respuesta<Object> respuesta);
     }
 
     ISubirFotosServiceCallback listener;
@@ -39,7 +40,11 @@ public class SubirFotosService extends Servicios implements ISubirFotosService {
             uploadTask.addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception exception) {
-                    // Handle unsuccessful uploads
+                    Respuesta<Object> respuesta = new Respuesta<Object>();
+                    respuesta.Exito = false;
+                    respuesta.Mensaje = "Ocurrió un error al subir la foto a la galería";
+                    listener.callbackSubirFotos(respuesta);
+
                 }
             }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
@@ -63,5 +68,8 @@ public class SubirFotosService extends Servicios implements ISubirFotosService {
         foto.setKey(key);
         fotosReference.child(foto.keyFiesta).child(key).setValue(foto);
 
+        Respuesta<Object> respuesta = new Respuesta<Object>();
+        respuesta.Exito = true;
+        listener.callbackSubirFotos(respuesta);
     }
 }

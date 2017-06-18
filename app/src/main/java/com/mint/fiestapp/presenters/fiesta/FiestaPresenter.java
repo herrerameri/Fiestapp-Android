@@ -1,6 +1,8 @@
 package com.mint.fiestapp.presenters.fiesta;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,20 +17,29 @@ import com.mint.fiestapp.models.fotos.FotosModel;
 import com.mint.fiestapp.models.fotos.IFotosModel;
 import com.mint.fiestapp.presenters.fotos.FotosPresenter;
 import com.mint.fiestapp.presenters.fotos.IFotosPresenter;
+import com.mint.fiestapp.presenters.fotos.ISubirFotosPresenter;
+import com.mint.fiestapp.presenters.fotos.SubirFotosPresenter;
 import com.mint.fiestapp.views.IActivity;
 import com.mint.fiestapp.views.fiesta.FiestaActivity;
 import com.mint.fiestapp.views.fiesta.FotosView;
 import com.mint.fiestapp.views.fiesta.IFiestaActivity;
+import com.mint.fiestapp.views.fiesta.MeGustasView;
+import com.mint.fiestapp.views.fiesta.MusicaView;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
-public class FiestaPresenter implements IFiestaPresenter, FotosModel.IFotosModelCallback, FotosView.IFotosViewClickListener {
+public class FiestaPresenter implements IFiestaPresenter, FotosModel.IFotosModelCallback, FotosView.IFotosViewClickListener, MeGustasView.IMeGustasViewClickListener {
 
     IFotosModel fotosModel = new FotosModel(this);
     IFiestaActivity activity;
     Context contexto;
     FiestaModel model;
     FotosView viewFotos;
+    MeGustasView viewMeGustas;
+    MusicaView viewMusica;
 
     @Override
     public void setActivity(IActivity activity) {
@@ -82,17 +93,17 @@ public class FiestaPresenter implements IFiestaPresenter, FotosModel.IFotosModel
 
     @Override
     public String getCantidadFotos() {
-        return String.format("%d", model.CantidadFotos);
+        return "10";
     }
 
     @Override
     public String getCantidadInvitados() {
-        return String.format("%d", model.CantidadInvitados);
+        return model.CantidadInvitados;
     }
 
     @Override
     public String getCantidadDias() {
-        return String.format("%d", model.CantidadDias);
+        return String.format("%d", model.CantidadDiasRestantes() );
     }
 
     @Override
@@ -115,15 +126,43 @@ public class FiestaPresenter implements IFiestaPresenter, FotosModel.IFotosModel
                 return viewFotos.getLayout(contexto);
             case MENU:
             case MEGUSTAS:
+                viewMeGustas = new MeGustasView(this);
+                return viewMeGustas.getLayout(contexto, obtenerInvitadosAleatorios(3));
             case VESTIMENTA:
             case REGALOS:
             case MUSICA:
+                viewMusica = new MusicaView();
+                return viewMusica.getLayout(contexto);
+        }
+        return null;
+    }
+
+    private List<String> obtenerInvitadosAleatorios(int cantidad){
+        List<String> invitados = new ArrayList<>();
+        if(model.Usuarios == null || model.Usuarios.size() <= cantidad)
+        {
+            return model.Usuarios;
         }
 
-        // TODO borrar este default
-        viewFotos = new FotosView(this);
-        fotosModel.obtenerFotos(8, "", model.key);
-        return viewFotos.getLayout(contexto);
+        Random Dice = new Random();
+        for(int i=0; i < cantidad; i++){
+            int indice = Dice.nextInt(model.Usuarios.size());
+            if(!invitados.contains(model.Usuarios.get(indice))){
+                invitados.add(model.Usuarios.get(indice));
+            }
+            else{
+                i--;
+            }
+        }
+
+        return invitados;
+    }
+
+    public void subirFotos(byte[] nuevaFoto){
+        ISubirFotosPresenter subirFotosPresenter = new SubirFotosPresenter();
+        subirFotosPresenter.setKeyFiesta(model.key);
+        subirFotosPresenter.agregarFoto(nuevaFoto);
+        subirFotosPresenter.iniciarActivity(contexto);
     }
 
     //region FotosModel.IFotosModelCallback,
@@ -141,6 +180,15 @@ public class FiestaPresenter implements IFiestaPresenter, FotosModel.IFotosModel
     public void setUsuariosFoto(UsuarioModel usuario) {
         // TODO
     }
+
+    @Override
+    public void agregarReaccion(String keyFoto, HashMap<String, UsuarioModel> reaccion) {
+    }
+
+    @Override
+    public void quitarReaccion(String keyFoto, String keyReaccion) {
+
+    }
     //endregion
 
 
@@ -154,6 +202,13 @@ public class FiestaPresenter implements IFiestaPresenter, FotosModel.IFotosModel
 
     @Override
     public void subirFotoClickCallback() {
+        activity.mostrarDialogoSubirFoto();
+    }
+    //endregion
+
+    //region MeGustasView.IMeGustasViewClickListener
+    @Override
+    public void quienGustaClickCallback() {
 
     }
     //endregion

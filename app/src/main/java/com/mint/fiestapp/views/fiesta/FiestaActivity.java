@@ -1,6 +1,14 @@
 package com.mint.fiestapp.views.fiesta;
 
+import android.app.AlertDialog;
+import android.content.ContentValues;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
@@ -21,8 +29,14 @@ import com.mint.fiestapp.views.BaseActivity;
 import com.mint.fiestapp.views.custom.ImageCircleTransform;
 import com.squareup.picasso.Picasso;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Locale;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 
 public class FiestaActivity extends BaseActivity implements IFiestaActivity, OnMapReadyCallback {
@@ -43,6 +57,9 @@ public class FiestaActivity extends BaseActivity implements IFiestaActivity, OnM
     //endregion
 
     static SupportMapFragment frgMapUbicacionFiesta;
+    private static final int REQUEST_FOTO_CAMARA = 111;
+    private static final int REQUEST_FOTO_GALERIA = 222;
+    Uri imageUri;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -93,6 +110,12 @@ public class FiestaActivity extends BaseActivity implements IFiestaActivity, OnM
         }
     }
 
+    private void irAGoogleMaps(){
+        String uri = String.format(Locale.ENGLISH, "geo:%f,%f", presenter.getLatitud(), presenter.getLongitud());
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+        startActivity(intent);
+    }
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
         LatLng ubicacionFiesta = new LatLng(presenter.getLatitud(), presenter.getLongitud());
@@ -111,6 +134,76 @@ public class FiestaActivity extends BaseActivity implements IFiestaActivity, OnM
     public void iniciarActivityPresenter(){
         presenter.setContext(this);
         presenter.setActivity(this);
+    }
+
+    @Override
+    public void mostrarDialogoSubirFoto(){
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+
+        // set title
+        alertDialogBuilder.setTitle("Subir foto");
+
+        // set dialog message
+        alertDialogBuilder
+                .setMessage("¿De dónde deseas tomar la foto?")
+                .setCancelable(false)
+                .setPositiveButton("Cámara",new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,int id) {
+
+                        ContentValues values = new ContentValues();
+                        values.put(MediaStore.Images.Media.TITLE, "Fiestapp");
+                        imageUri = getContentResolver().insert(
+                                MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+                        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                        intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+                        startActivityForResult(intent, REQUEST_FOTO_CAMARA);
+
+                        dialog.cancel();
+                    }
+                })
+                .setNegativeButton("Galería",new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,int id) {
+                        Intent intentNuevaFoto = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                        if (intentNuevaFoto.resolveActivity(getPackageManager()) != null) {
+                            startActivityForResult(intentNuevaFoto, REQUEST_FOTO_GALERIA);
+                        }
+                        dialog.cancel();
+                    }
+                });
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+
+        alertDialog.show();
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_FOTO_CAMARA && resultCode == RESULT_OK) {
+            try {
+                Bitmap thumbnail = MediaStore.Images.Media.getBitmap(
+                        getContentResolver(), imageUri);
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                thumbnail.compress(Bitmap.CompressFormat.JPEG, 20, stream);
+                byte[] byteArray = stream.toByteArray();
+                presenter.subirFotos(byteArray);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        if (requestCode == REQUEST_FOTO_GALERIA && resultCode == RESULT_OK && null != data) {
+            try{
+                final Uri imageUri = data.getData();
+                final InputStream imageStream = getContentResolver().openInputStream(imageUri);
+                Bitmap bmp = BitmapFactory.decodeStream(imageStream);
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                bmp.compress(Bitmap.CompressFormat.JPEG, 20, stream);
+                byte[] byteArray = stream.toByteArray();
+                presenter.subirFotos(byteArray);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override

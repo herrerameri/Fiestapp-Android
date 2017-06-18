@@ -47,6 +47,15 @@
                     android:text=""/>
 
                 <com.mint.fiestapp.views.custom.CustomTextView
+                    android:id="@+id/texDescripcion"
+                    android:layout_width="wrap_content"
+                    customAttrs:customFont="UBUNTU_NORMAL"
+                    android:textColor="@color/titles"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:text=""/>
+
+                <com.mint.fiestapp.views.custom.CustomTextView
                     android:id="@+id/texDetalle"
                     android:layout_width="wrap_content"
                     customAttrs:customFont="UBUNTU_REGULAR"

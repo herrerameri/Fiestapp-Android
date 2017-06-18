@@ -3,6 +3,7 @@ package com.mint.fiestapp.models.entidades;
 import com.mint.fiestapp.comun.EnumFuncionalidades;
 
 import java.io.Serializable;
+import java.sql.Array;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -10,6 +11,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.concurrent.TimeUnit;
 
 public class FiestaModel implements Serializable{
     public String key;
@@ -18,9 +21,8 @@ public class FiestaModel implements Serializable{
     public String FechaHora;
     public String Imagen;
     public UbicacionModel Ubicacion;
-    public int CantidadFotos;
-    public int CantidadDias;
-    public int CantidadInvitados;
+    public String CantidadInvitados;
+    public ArrayList<String> Usuarios;
     public ArrayList<EnumFuncionalidades> Funcionalidades;
 
     public void setKey(String key){
@@ -30,6 +32,13 @@ public class FiestaModel implements Serializable{
     public String FechaHora(){
         SimpleDateFormat formato = new SimpleDateFormat ("dd/MM/yyyy | HH:mm'HS'");
         return formato.format(getFechaDate());
+    }
+
+    public long CantidadDiasRestantes(){
+        long diff = getFechaDate().getTime() - new Date().getTime();
+        if(diff < 0)
+            return 0;
+        return TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
     }
 
     public String DiaMes(){

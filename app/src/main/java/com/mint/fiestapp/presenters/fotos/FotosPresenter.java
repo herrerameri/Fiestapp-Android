@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 
+import com.mint.fiestapp.comun.FirebaseAuth;
 import com.mint.fiestapp.comun.IntentKeys;
 import com.mint.fiestapp.models.entidades.FotoModel;
 import com.mint.fiestapp.models.entidades.UsuarioModel;
@@ -14,9 +15,12 @@ import com.mint.fiestapp.views.IActivity;
 import com.mint.fiestapp.views.fotos.FotosActivity;
 import com.mint.fiestapp.views.fotos.IFotosActivity;
 
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
-public class FotosPresenter implements IFotosPresenter, FotosModel.IFotosModelCallback, FotosAdapter.OnFotoClickListener {
+public class FotosPresenter implements IFotosPresenter, FotosModel.IFotosModelCallback, FotosAdapter.OnClickListener {
 
     IFotosModel fotosModel = new FotosModel(this);
     FotosAdapter adapterFotos;
@@ -72,7 +76,7 @@ public class FotosPresenter implements IFotosPresenter, FotosModel.IFotosModelCa
     public void mostrarFotos(List<FotoModel> modelo) {
         activity.ocultarProgreso();
         if(modelo.size() > 0){
-            activity.setKeyUltimaFoto(modelo.get(0).key);
+            activity.setKeyUltimaFoto(modelo.get(modelo.size()-1).FechaHora);
         }
         if(adapterFotos == null){
             adapterFotos = new FotosAdapter(modelo, contexto, this);
@@ -96,11 +100,41 @@ public class FotosPresenter implements IFotosPresenter, FotosModel.IFotosModelCa
     public void setUsuariosFoto(UsuarioModel usuario) {
         adapterFotos.setUsuario(usuario.Id, usuario.Nombre);
     }
+
+    @Override
+    public void agregarReaccion(String keyFoto, HashMap<String, UsuarioModel> reaccion) {
+        adapterFotos.addReaccionFoto(keyFoto, reaccion);
+    }
+
+    @Override
+    public void quitarReaccion(String keyFoto, String keyReaccion) {
+        adapterFotos.removeReaccionFoto(keyFoto, keyReaccion);
+    }
     //endregion
 
-
+    //region FotosAdapter.OnClickListener
     @Override
     public void onFotoClick(Context context, FotoModel item) {
 
     }
+
+    @Override
+    public void onReaccionClick(FotoModel item) {
+        if(item.YoReaccione()){
+            String keyReaccion = "";
+            Iterator it = item.Reacciones.entrySet().iterator();
+            while (it.hasNext()) {
+                Map.Entry pair = (Map.Entry)it.next();
+                if(((UsuarioModel)pair.getValue()).Id.equals(FirebaseAuth.getFacebookIdUsuarioAutenticado()))
+                {
+                    keyReaccion = (String)pair.getKey();
+                }
+            }
+            fotosModel.quitarReaccion(item.keyFiesta, item.key, keyReaccion);
+        }
+        else{
+            fotosModel.agregarReaccion(item.keyFiesta, item.key, FirebaseAuth.getFacebookIdUsuarioAutenticado());
+        }
+    }
+    //endregion
 }

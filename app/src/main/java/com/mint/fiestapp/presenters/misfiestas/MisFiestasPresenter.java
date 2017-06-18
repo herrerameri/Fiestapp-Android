@@ -10,6 +10,7 @@ import com.mint.fiestapp.models.entidades.RespuestaLista;
 import com.mint.fiestapp.models.misfiestas.IMisFiestasModel;
 import com.mint.fiestapp.models.misfiestas.MisFiestasModel;
 import com.mint.fiestapp.views.IActivity;
+import com.mint.fiestapp.views.MainActivity;
 import com.mint.fiestapp.views.misfiestas.IMisFiestasActivity;
 import com.mint.fiestapp.views.misfiestas.MisFiestasActivity;
 
@@ -45,6 +46,12 @@ public class MisFiestasPresenter implements IMisFiestasPresenter, MisFiestasMode
     public void obtenerFiestas(){
         activity.mostrarProgreso();
         model.obtenerFiestas();
+    }
+
+    @Override
+    public void volverALogin(){
+        Intent intent = new Intent(contexto, MainActivity.class);
+        contexto.startActivity(intent);
     }
 
     //region MisFiestasModel.IMisFiestasModelCallback

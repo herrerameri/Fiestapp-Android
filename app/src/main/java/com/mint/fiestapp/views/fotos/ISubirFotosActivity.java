@@ -7,4 +7,5 @@ import com.mint.fiestapp.views.IActivity;
 
 public interface ISubirFotosActivity extends IActivity {
     void addFoto(FotoModel foto);
+    void finishActivity();
 }

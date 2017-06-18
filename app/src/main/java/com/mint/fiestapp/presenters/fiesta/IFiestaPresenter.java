@@ -9,6 +9,7 @@ public interface IFiestaPresenter extends IPresenter {
     void setFiesta(FiestaModel model);
     int getTotalFuncionalidades();
     View getLayoutFuncionalidad(int indice);
+    void subirFotos(byte[] nuevaFoto);
 
     double getLatitud();
     double getLongitud();
