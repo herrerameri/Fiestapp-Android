@@ -28,6 +28,7 @@
     <string name="cancelo_login">Se ha cancelado el inicio con Facebook.</string>
     <string name="sin_fotos">Aún nadie ha subido fotos.\n ¡Sé el primero en poner onda!</string>
     <string name="sin_invitados">Aún ningún invitado se ha añadido a la fiesta.</string>
+    <string name="opinion_musica_no_disponible">¡Durante la fiesta podrás puntuar la música!</string>
 
     <!-- SUBIR FOTO -->
     <string name="progreso_foto">Subiendo foto...</string>

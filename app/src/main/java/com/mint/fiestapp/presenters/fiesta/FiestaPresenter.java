@@ -27,6 +27,7 @@ import com.mint.fiestapp.views.fiesta.MeGustasView;
 import com.mint.fiestapp.views.fiesta.MusicaView;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
@@ -132,7 +133,7 @@ public class FiestaPresenter implements IFiestaPresenter, FotosModel.IFotosModel
             case REGALOS:
             case MUSICA:
                 viewMusica = new MusicaView();
-                return viewMusica.getLayout(contexto);
+                return viewMusica.getLayout(contexto, Long.parseLong(model.FechaHora) < new Date().getTime());
         }
         return null;
     }

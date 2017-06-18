@@ -1,7 +1,6 @@
 package com.mint.fiestapp.presenters.fotos;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +12,7 @@ import com.mint.fiestapp.comun.Facebook;
 import com.mint.fiestapp.models.entidades.FotoModel;
 import com.mint.fiestapp.models.entidades.UsuarioModel;
 import com.mint.fiestapp.views.custom.CustomTextView;
+import com.mint.fiestapp.views.custom.ExpandibleTextView;
 import com.mint.fiestapp.views.custom.ImageCircleTransform;
 import com.squareup.picasso.Picasso;
 
@@ -39,7 +39,7 @@ public class FotosAdapter extends RecyclerView.Adapter<FotosAdapter.FotoViewHold
         @BindView(R.id.imgUsuario) ImageView imgUsuario;
         @BindView(R.id.imgReaccion) ImageView imgReaccion;
         @BindView(R.id.texNombreUsuario) CustomTextView texNombreUsuario;
-        @BindView(R.id.texDescripcion) CustomTextView texDescripcion;
+        @BindView(R.id.texDescripcion) ExpandibleTextView texDescripcion;
         @BindView(R.id.texReacciones) CustomTextView texReacciones;
         @BindView(R.id.texDetalle) CustomTextView texDetalle;
 
@@ -140,4 +140,5 @@ public class FotosAdapter extends RecyclerView.Adapter<FotosAdapter.FotoViewHold
         }
         notifyDataSetChanged();
     }
+
 }

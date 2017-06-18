@@ -17,7 +17,7 @@
         <LinearLayout
             android:layout_alignBottom="@id/imgFoto"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="70dp"
             android:padding="3dp"
             android:weightSum="1"
             android:orientation="horizontal"
@@ -46,7 +46,7 @@
                     android:textSize="12sp"
                     android:text=""/>
 
-                <com.mint.fiestapp.views.custom.CustomTextView
+                <com.mint.fiestapp.views.custom.ExpandibleTextView
                     android:id="@+id/texDescripcion"
                     android:layout_width="wrap_content"
                     customAttrs:customFont="UBUNTU_NORMAL"

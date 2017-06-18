@@ -12,5 +12,5 @@ public interface IFotosActivity extends IActivity {
     String getKeyUltimaFoto();
     void setUltimaPagina(boolean esUltimaPagina);
     void setKeyUltimaFoto(String key);
-    int PAGE_SIZE = 4;
+    int PAGE_SIZE = 10;
 }

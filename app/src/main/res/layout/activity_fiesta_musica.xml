@@ -6,78 +6,110 @@
     customAttrs:cardUseCompatPadding="true"
     android:layout_height="wrap_content">
 
+
+    <LinearLayout
+        android:id="@+id/linNoOpinar"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="100dp"
+        android:weightSum="1">
+
+        <com.mint.fiestapp.views.custom.CustomTextView
+            customAttrs:customFont="UBUNTU_REGULAR"
+            android:gravity="center"
+            android:textColor="@color/subtitles"
+            android:layout_weight="0.7"
+            android:padding="20dp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="@string/opinion_musica_no_disponible"/>
+
+        <LinearLayout
+            android:gravity="center"
+            android:layout_height="match_parent"
+            android:layout_weight="0.3"
+            android:layout_width="0dp">
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@drawable/parlante"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linOpinar"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="@dimen/padding_text">
+
+        <com.mint.fiestapp.views.custom.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/que_opinion_musica"
+            android:textColor="@color/subtitles"
+            android:textSize="12sp"
+            customAttrs:customFont="UBUNTU_REGULAR" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:weightSum="1"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_weight="0.2"
+                android:layout_height="80dp"
+                android:src="@mipmap/ic_sentiment_very_dissatisfied" />
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_weight="0.2"
+                android:layout_height="80dp"
+                android:src="@mipmap/ic_sentiment_dissatisfied" />
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_weight="0.2"
+                android:layout_height="80dp"
+                android:src="@mipmap/ic_sentiment_neutral" />
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_weight="0.2"
+                android:layout_height="80dp"
+                android:tint="@color/fucsia"
+                android:src="@mipmap/ic_sentiment_satisfied" />
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="0dp"
+                android:layout_height="80dp"
+                android:layout_weight="0.2"
+                android:src="@mipmap/ic_sentiment_very_satisfied" />
+
+        </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="@dimen/padding_text">
+            android:gravity="bottom|right"
+            android:orientation="vertical">
 
-            <com.mint.fiestapp.views.custom.CustomTextView
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/background"/>
+
+            <Button
+                android:id="@+id/btnProponer"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/que_opinion_musica"
-                android:textColor="@color/subtitles"
-                android:textSize="12sp"
-                customAttrs:customFont="UBUNTU_REGULAR" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:weightSum="1"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_weight="0.2"
-                    android:layout_height="80dp"
-                    android:src="@mipmap/ic_sentiment_very_dissatisfied" />
-
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_weight="0.2"
-                    android:layout_height="80dp"
-                    android:src="@mipmap/ic_sentiment_dissatisfied" />
-
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_weight="0.2"
-                    android:layout_height="80dp"
-                    android:src="@mipmap/ic_sentiment_neutral" />
-
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_weight="0.2"
-                    android:layout_height="80dp"
-                    android:tint="@color/fucsia"
-                    android:src="@mipmap/ic_sentiment_satisfied" />
-
-                <ImageView
-                    android:id="@+id/imageView2"
-                    android:layout_width="0dp"
-                    android:layout_height="80dp"
-                    android:layout_weight="0.2"
-                    android:src="@mipmap/ic_sentiment_very_satisfied" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="bottom|right"
-                android:orientation="vertical">
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:background="@color/background"/>
-
-                <Button
-                    android:id="@+id/btnProponer"
-                    android:layout_width="wrap_content"
-                    android:text="@string/proponer_cancion"
-                    android:layout_height="@dimen/height_flat_button"
-                    style="@style/FlatButton"
-                    android:textColor="@color/subtitles"/>
-            </LinearLayout>
+                android:text="@string/proponer_cancion"
+                android:layout_height="@dimen/height_flat_button"
+                style="@style/FlatButton"
+                android:textColor="@color/subtitles"/>
         </LinearLayout>
+    </LinearLayout>
 </android.support.v7.widget.CardView>

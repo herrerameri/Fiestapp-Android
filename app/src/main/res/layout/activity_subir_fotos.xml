@@ -26,6 +26,7 @@
         android:padding="@dimen/padding_text"
         android:id="@+id/ediDescripcion"
         android:lines="2"
+        android:maxLength="200"
         android:hint="Descripción de las fotos"
         android:layout_width="match_parent"
         android:layout_height="100dp" />
