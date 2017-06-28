@@ -3,7 +3,9 @@ package com.mint.fiestapp.presenters.fotos;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 
 import com.mint.fiestapp.comun.FirebaseAuth;
 import com.mint.fiestapp.comun.IntentKeys;
@@ -15,6 +17,7 @@ import com.mint.fiestapp.views.IActivity;
 import com.mint.fiestapp.views.fotos.FotosActivity;
 import com.mint.fiestapp.views.fotos.IFotosActivity;
 
+import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -134,6 +137,18 @@ public class FotosPresenter implements IFotosPresenter, FotosModel.IFotosModelCa
         }
         else{
             fotosModel.agregarReaccion(item.keyFiesta, item.key, FirebaseAuth.getFacebookIdUsuarioAutenticado());
+        }
+    }
+
+    @Override
+    public void onCompartirClick(Uri bitmapUri) {
+        if (bitmapUri != null) {
+            // Construct a ShareIntent with link to image
+            Intent shareIntent = new Intent();
+            shareIntent.setAction(Intent.ACTION_SEND);
+            shareIntent.putExtra(Intent.EXTRA_STREAM, bitmapUri);
+            shareIntent.setType("image/*");
+            contexto.startActivity(Intent.createChooser(shareIntent, "Compartir imagen de la fiesta"));
         }
     }
     //endregion

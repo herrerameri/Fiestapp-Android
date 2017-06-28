@@ -1,6 +1,11 @@
 package com.mint.fiestapp.presenters.fotos;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.os.Environment;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +21,9 @@ import com.mint.fiestapp.views.custom.ExpandibleTextView;
 import com.mint.fiestapp.views.custom.ImageCircleTransform;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -32,12 +40,14 @@ public class FotosAdapter extends RecyclerView.Adapter<FotosAdapter.FotoViewHold
     public interface OnClickListener {
         void onFotoClick(Context context, FotoModel item);
         void onReaccionClick(FotoModel item);
+        void onCompartirClick(Uri bitmapUri);
     }
 
     public static class FotoViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.imgFoto) ImageView imgFoto;
         @BindView(R.id.imgUsuario) ImageView imgUsuario;
         @BindView(R.id.imgReaccion) ImageView imgReaccion;
+        @BindView(R.id.imgCompartir) ImageView imgCompartir;
         @BindView(R.id.texNombreUsuario) CustomTextView texNombreUsuario;
         @BindView(R.id.texDescripcion) ExpandibleTextView texDescripcion;
         @BindView(R.id.texReacciones) CustomTextView texReacciones;
@@ -93,6 +103,12 @@ public class FotosAdapter extends RecyclerView.Adapter<FotosAdapter.FotoViewHold
             listener.onReaccionClick(item);
             }
         });
+        view.imgCompartir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onCompartirClick(getLocalBitmapUri(view.imgFoto));
+            }
+        });
     }
 
     @Override
@@ -141,4 +157,28 @@ public class FotosAdapter extends RecyclerView.Adapter<FotosAdapter.FotoViewHold
         notifyDataSetChanged();
     }
 
+    private Uri getLocalBitmapUri(ImageView imageView) {
+        // Extract Bitmap from ImageView drawable
+        Drawable drawable = imageView.getDrawable();
+        Bitmap bmp = null;
+        if (drawable instanceof BitmapDrawable){
+            bmp = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
+        } else {
+            return null;
+        }
+        // Store image to default external storage directory
+        Uri bmpUri = null;
+        try {
+            File file =  new File(Environment.getExternalStoragePublicDirectory(
+                    Environment.DIRECTORY_DOWNLOADS), "Fiestapp_" + System.currentTimeMillis() + ".png");
+            file.getParentFile().mkdirs();
+            FileOutputStream out = new FileOutputStream(file);
+            bmp.compress(Bitmap.CompressFormat.PNG, 20, out);
+            out.close();
+            bmpUri = Uri.fromFile(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return bmpUri;
+    }
 }
