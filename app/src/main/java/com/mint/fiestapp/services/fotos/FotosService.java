@@ -31,10 +31,10 @@ public class FotosService extends Servicios implements IFotosService {
 
     @Override
     public void obtenerUltimasFotos(int cantidad, String keyFiesta){
-        fotosReference.child(keyFiesta).orderByChild("FechaHora").limitToLast(cantidad).addValueEventListener(
-            new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
+        fotosReference.child(keyFiesta).orderByChild("FechaHora").limitToLast(cantidad).addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
                     List<FotoModel> fotos = new ArrayList<>();
                     for (DataSnapshot snapshot: dataSnapshot.getChildren()){
                         FotoModel foto = snapshot.getValue(FotoModel.class);
@@ -59,7 +59,7 @@ public class FotosService extends Servicios implements IFotosService {
 
     @Override
     public void obtenerPaginaFotos(int cantidad, String keyUltimaFoto,String keyFiesta){
-        fotosReference.child(keyFiesta).orderByChild("FechaHora").limitToLast(cantidad+1).endAt(keyUltimaFoto).addValueEventListener(
+        fotosReference.child(keyFiesta).orderByChild("FechaHora").limitToLast(cantidad+1).endAt(keyUltimaFoto).addListenerForSingleValueEvent(
                 new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {

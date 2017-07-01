@@ -10,6 +10,7 @@ public interface IFotosPresenter extends IPresenter {
     void setKeyFiesta(String key);
     void obtenerFotos();
     void obtenerMasFotos();
+    void removeFotos();
 
     void subirFotos(byte[] nuevaFoto);
 }

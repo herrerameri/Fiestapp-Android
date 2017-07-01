@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import com.mint.fiestapp.R;
+import com.mint.fiestapp.comun.FirebaseAuth;
 import com.mint.fiestapp.comun.IntentKeys;
 import com.mint.fiestapp.models.entidades.FiestaModel;
 import com.mint.fiestapp.models.entidades.FotoModel;
@@ -140,16 +141,21 @@ public class FiestaPresenter implements IFiestaPresenter, FotosModel.IFotosModel
 
     private List<String> obtenerInvitadosAleatorios(int cantidad){
         List<String> invitados = new ArrayList<>();
-        if(model.Usuarios == null || model.Usuarios.size() <= cantidad)
+        List<String> listaUsuarios = new ArrayList<>();
+        String miIdUsuario = FirebaseAuth.getFacebookIdUsuarioAutenticado();
+        listaUsuarios.addAll(model.Usuarios.keySet());
+        listaUsuarios.remove(miIdUsuario);
+
+        if(listaUsuarios.size() <= cantidad)
         {
-            return model.Usuarios;
+            return listaUsuarios;
         }
 
         Random Dice = new Random();
         for(int i=0; i < cantidad; i++){
-            int indice = Dice.nextInt(model.Usuarios.size());
-            if(!invitados.contains(model.Usuarios.get(indice))){
-                invitados.add(model.Usuarios.get(indice));
+            int indice = Dice.nextInt(listaUsuarios.size());
+            if(!invitados.contains(listaUsuarios.get(indice))){
+                invitados.add(listaUsuarios.get(indice));
             }
             else{
                 i--;

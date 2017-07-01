@@ -11,6 +11,7 @@ import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.FileProvider;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -46,6 +47,7 @@ public class FotosActivity extends BaseActivity implements IFotosActivity {
     @BindView(R.id.fabNuevaFoto) FloatingActionButton fabNuevaFoto;
     @BindView(R.id.fabCamara) FloatingActionButton fabCamara;
     @BindView(R.id.fabGaleria) FloatingActionButton fabGaleria;
+    @BindView(R.id.swpRefresh) SwipeRefreshLayout swpRefresh;
     // endregion
 
     private Animation animFabOpen;
@@ -81,11 +83,30 @@ public class FotosActivity extends BaseActivity implements IFotosActivity {
         animFabClose = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fab_close);
         animRotateForward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_forward);
         animRotateBackward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_backward);
+
+        swpRefresh.setColorSchemeResources(
+                R.color.fucsia,
+                R.color.colorPrimaryDark,
+                R.color.colorPrimary,
+                R.color.colorAccent);
+
     }
 
     @Override
     public void eventos() {
         iniciarListaFotos();
+        pullRefresh();
+    }
+
+    private void pullRefresh(){
+        swpRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                presenter.removeFotos();
+                presenter.obtenerFotos();
+                swpRefresh.setRefreshing(false);
+            }
+        });
     }
 
     private void iniciarListaFotos(){

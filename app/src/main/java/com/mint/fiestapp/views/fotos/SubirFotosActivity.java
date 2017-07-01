@@ -17,6 +17,7 @@ import com.mint.fiestapp.presenters.IPresenter;
 import com.mint.fiestapp.presenters.fotos.IFotosPresenter;
 import com.mint.fiestapp.presenters.fotos.ISubirFotosPresenter;
 import com.mint.fiestapp.views.BaseActivity;
+import com.mint.fiestapp.views.custom.CustomToast;
 import com.mint.fiestapp.views.custom.ImageSquareTransform;
 import com.squareup.picasso.Picasso;
 
@@ -104,7 +105,7 @@ public class SubirFotosActivity extends BaseActivity implements ISubirFotosActiv
 
     @Override
     public void mostrarProgreso() {
-        Toast.makeText(this, getResources().getString(R.string.progreso_foto),Toast.LENGTH_LONG).show();
+        CustomToast.showToast(this, Toast.LENGTH_SHORT, getResources().getString(R.string.progreso_foto));
     }
 
     @Override

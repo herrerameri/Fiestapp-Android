@@ -18,11 +18,12 @@ public class FiestaModel implements Serializable{
     public String key;
     public String Nombre;
     public String Detalle;
+    public String Codigo;
     public String FechaHora;
     public String Imagen;
     public UbicacionModel Ubicacion;
     public String CantidadInvitados;
-    public ArrayList<String> Usuarios;
+    public HashMap<String, Boolean> Usuarios;
     public ArrayList<EnumFuncionalidades> Funcionalidades;
 
     public void setKey(String key){

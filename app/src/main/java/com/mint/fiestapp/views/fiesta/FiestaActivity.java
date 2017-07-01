@@ -139,11 +139,7 @@ public class FiestaActivity extends BaseActivity implements IFiestaActivity, OnM
     @Override
     public void mostrarDialogoSubirFoto(){
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-
-        // set title
         alertDialogBuilder.setTitle("Subir foto");
-
-        // set dialog message
         alertDialogBuilder
                 .setMessage("¿De dónde deseas tomar la foto?")
                 .setCancelable(false)

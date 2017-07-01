@@ -1,4 +1,4 @@
-package com.mint.fiestapp.presenters.misfiestas;
+package com.mint.fiestapp.presenters.home;
 
 import android.content.Context;
 import android.support.v7.widget.CardView;

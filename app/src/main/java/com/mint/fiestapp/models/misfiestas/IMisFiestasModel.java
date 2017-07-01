@@ -9,4 +9,5 @@ import java.io.Serializable;
 
 public interface IMisFiestasModel extends IModel {
     void obtenerFiestas();
+    void obtenerFiestasPorCodigo(String codigo);
 }

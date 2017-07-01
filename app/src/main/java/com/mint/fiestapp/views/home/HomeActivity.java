@@ -1,29 +1,26 @@
-package com.mint.fiestapp.views.misfiestas;
+package com.mint.fiestapp.views.home;
 
-import android.content.Context;
-import android.graphics.Color;
-import android.graphics.Typeface;
+import android.app.AlertDialog;
+import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.internal.BottomNavigationMenuView;
 import android.support.design.widget.BottomNavigationView;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
-import android.view.InflateException;
-import android.view.LayoutInflater;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,43 +29,43 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.mint.fiestapp.R;
 import com.mint.fiestapp.comun.IntentKeys;
 import com.mint.fiestapp.presenters.IPresenter;
-import com.mint.fiestapp.presenters.misfiestas.IMisFiestasPresenter;
-import com.mint.fiestapp.presenters.misfiestas.MisFiestasPresenter;
+import com.mint.fiestapp.presenters.home.IHomePresenter;
 import com.mint.fiestapp.views.BaseActivity;
+import com.mint.fiestapp.views.IActivity;
+import com.mint.fiestapp.views.custom.CustomToast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static android.os.Build.*;
 
+public class HomeActivity extends BaseActivity implements IHomeActivity {
 
-public class MisFiestasActivity extends BaseActivity implements IMisFiestasActivity{
-
-    IMisFiestasPresenter presenter;
+    IHomePresenter presenter;
 
     //region Controles
-    @BindView(R.id.lisFiestas) RecyclerView lisFiestas;
     @BindView(R.id.navMisFiestas) BottomNavigationView navMisFiestas;
+    @BindView(R.id.texTitulo) TextView texTitulo;
+    @BindView(R.id.prgCargando) ProgressBar prgCargando;
     BottomNavigationMenuView navMenu;
     //endregion
 
-    private RecyclerView.LayoutManager layoutManager;
+    private MisFiestasFragment frgMisFiestas;
+    private AgregarFiestaFragment fraAgregarFiesta;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_misfiestas);
+        setContentView(R.layout.activity_home);
         if(getIntent().getExtras() != null){
-            iniciarPresenter((IMisFiestasPresenter)getIntent().getExtras().getSerializable(IntentKeys.PRESENTER));
+            iniciarPresenter((IHomePresenter)getIntent().getExtras().getSerializable(IntentKeys.PRESENTER));
         }
         binding();
         eventos();
-        presenter.obtenerFiestas();
     }
 
     @Override
     public void iniciarPresenter(IPresenter presenter){
-        this.presenter = (IMisFiestasPresenter)presenter;
+        this.presenter = (IHomePresenter)presenter;
         iniciarActivityPresenter();
     }
 
@@ -81,17 +78,18 @@ public class MisFiestasActivity extends BaseActivity implements IMisFiestasActiv
     @Override
     public void binding(){
         ButterKnife.bind(this);
+        texTitulo.setText(getResources().getString(R.string.mis_fiestas));
+        frgMisFiestas = new MisFiestasFragment();
+        fraAgregarFiesta = new AgregarFiestaFragment();
+
+        FragmentManager manager = getSupportFragmentManager();
+        manager.beginTransaction().replace(R.id.frgLayout, frgMisFiestas).commit();
+        presenter.obtenerFiestas();
     }
 
     @Override
     public void eventos(){
-        iniciarListaFiestas();
         iniciarBottomNav();
-    }
-
-    private void iniciarListaFiestas(){
-        layoutManager = new LinearLayoutManager(this);
-        lisFiestas.setLayoutManager(layoutManager);
     }
 
     private void iniciarBottomNav(){
@@ -106,22 +104,22 @@ public class MisFiestasActivity extends BaseActivity implements IMisFiestasActiv
             iconView.setLayoutParams(layoutParams);
         }
 
+        final FragmentManager manager = getSupportFragmentManager();
         navMisFiestas.setOnNavigationItemSelectedListener(
             new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                     switch (item.getItemId()) {
                         case R.id.action_misfiestas:
-
+                            texTitulo.setText(getResources().getString(R.string.mis_fiestas));
+                            manager.beginTransaction().replace(R.id.frgLayout, frgMisFiestas).commit();
                             break;
                         case R.id.action_nuevafiesta:
-
+                            texTitulo.setText(getResources().getString(R.string.nueva_fiesta));
+                            manager.beginTransaction().replace(R.id.frgLayout, fraAgregarFiesta).commit();
                             break;
                         case R.id.action_cerrar_sesion:
-                            FirebaseAuth.getInstance().signOut();
-                            LoginManager.getInstance().logOut();
-                            presenter.volverALogin();
-                            finish();
+                            showDialogoCerrarSesion();
                             break;
                     }
                     return false;
@@ -129,20 +127,48 @@ public class MisFiestasActivity extends BaseActivity implements IMisFiestasActiv
             });
     }
 
+    private void showDialogoCerrarSesion(){
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setTitle(getResources().getString(R.string.cerrar_sesion));
+        alertDialogBuilder
+                .setMessage(getResources().getString(R.string.seguro_cerrar_sesion))
+                .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,int id) {
+                        FirebaseAuth.getInstance().signOut();
+                        LoginManager.getInstance().logOut();
+                        presenter.volverALogin();
+                        dialog.cancel();
+                        finish();
+                    }
+                });
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+
     @Override
     public void mostrarFiestas(RecyclerView.Adapter adapter){
-        lisFiestas.setAdapter(adapter);
+        frgMisFiestas.setAdapter(adapter);
     }
 
     @Override
-    public void mostrarError(String mensaje){
-        Toast.makeText(this, mensaje, Toast.LENGTH_SHORT).show();
+    public void agregarFiesta(String codigo){
+        presenter.agregarFiesta(codigo);
     }
 
     @Override
-    public void mostrarProgreso(){}
+    public void mostrarMensaje(String mensaje){
+        CustomToast.showToast(this, Toast.LENGTH_SHORT, mensaje);
+    }
 
     @Override
-    public void ocultarProgreso(){}
+    public void mostrarProgreso(){
+        prgCargando.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void ocultarProgreso(){
+        prgCargando.setVisibility(View.GONE);
+    }
 
 }

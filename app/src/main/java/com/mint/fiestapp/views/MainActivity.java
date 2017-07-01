@@ -22,8 +22,9 @@ import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.mint.fiestapp.R;
-import com.mint.fiestapp.presenters.misfiestas.IMisFiestasPresenter;
-import com.mint.fiestapp.presenters.misfiestas.MisFiestasPresenter;
+import com.mint.fiestapp.presenters.home.IHomePresenter;
+import com.mint.fiestapp.presenters.home.HomePresenter;
+import com.mint.fiestapp.views.custom.CustomToast;
 
 public class MainActivity extends BaseActivity  {
     private final int DURACION_SPLASH = 3000; // 3 segundos
@@ -37,31 +38,26 @@ public class MainActivity extends BaseActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        callbackManager = CallbackManager.Factory.create();
+        btnLoginFacebook = (LoginButton)findViewById(R.id.btnLoginFacebook);
+        btnLoginFacebook.setReadPermissions("email", "public_profile");
+        btnLoginFacebook.registerCallback(callbackManager, new FacebookCallback<LoginResult>(){
 
-        if (user == null)
-        {
-            callbackManager = CallbackManager.Factory.create();
-            btnLoginFacebook = (LoginButton)findViewById(R.id.btnLoginFacebook);
-            btnLoginFacebook.setReadPermissions("email", "public_profile");
-            btnLoginFacebook.registerCallback(callbackManager, new FacebookCallback<LoginResult>(){
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                handleFacebookAccessToken(loginResult.getAccessToken());
+            }
 
-                @Override
-                public void onSuccess(LoginResult loginResult) {
-                    handleFacebookAccessToken(loginResult.getAccessToken());
-                }
+            @Override
+            public void onCancel() {
+                CustomToast.showToast(getApplicationContext(), Toast.LENGTH_LONG, getResources().getString(R.string.cancelo_login));
+            }
 
-                @Override
-                public void onCancel() {
-                    Toast.makeText(getApplicationContext(), R.string.cancelo_login, Toast.LENGTH_LONG);
-                }
-
-                @Override
-                public void onError(FacebookException error) {
-                    Toast.makeText(getApplicationContext(), R.string.error_login, Toast.LENGTH_LONG);
-                }
-            });
-        }
+            @Override
+            public void onError(FacebookException error) {
+                CustomToast.showToast(getApplicationContext(), Toast.LENGTH_LONG, getResources().getString(R.string.error_login));
+            }
+        });
 
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseAuthListener = new FirebaseAuth.AuthStateListener() {
@@ -85,7 +81,7 @@ public class MainActivity extends BaseActivity  {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (!task.isSuccessful()) {
-                    Toast.makeText(MainActivity.this, getResources().getString(R.string.error_login), Toast.LENGTH_LONG).show();
+                    CustomToast.showToast(getApplicationContext(), Toast.LENGTH_LONG, getResources().getString(R.string.error_login));
                 }
             }
         });
@@ -123,7 +119,7 @@ public class MainActivity extends BaseActivity  {
                     if (firebaseAuthListener != null) {
                         firebaseAuth.removeAuthStateListener(firebaseAuthListener);
                     }
-                    IMisFiestasPresenter misFiestasPresenter = new MisFiestasPresenter();
+                    IHomePresenter misFiestasPresenter = new HomePresenter();
                     misFiestasPresenter.iniciarActivity(MainActivity.this);
                     finish();
                 };

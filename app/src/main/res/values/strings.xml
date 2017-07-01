@@ -5,6 +5,7 @@
     <string name="nueva_fiesta">Agregar fiesta</string>
     <string name="notificaciones">Notificaciones</string>
     <string name="cerrar_sesion">Cerrar sesión</string>
+    <string name="seguro_cerrar_sesion">¿De verdad quieres cerrar sesión?</string>
 
     <string name="facebook_app_id">209586026220608</string>
     <string name="fb_login_protocol_scheme">fb209586026220608</string>
@@ -32,4 +33,12 @@
 
     <!-- SUBIR FOTO -->
     <string name="progreso_foto">Subiendo foto...</string>
+
+    <!-- MIS FIESTAS -->
+    <string name="no_hay_fiestas">Aún no has añadido ninguna fiesta, ¿qué esperas? ¡Diviértete!</string>
+
+    <!-- NUEVA FIESTA -->
+    <string name="ingrese_codigo">Ingresá el código de la fiesta a la que querés unirte:</string>
+    <string name="codigo_vacio">Ingresá algún código</string>
+    <string name="ya_existe_fiesta">La fiesta que quieres añadir ya está en tu lista de fiestas</string>
 </resources>

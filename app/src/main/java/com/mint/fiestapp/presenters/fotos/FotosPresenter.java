@@ -18,6 +18,7 @@ import com.mint.fiestapp.views.fotos.FotosActivity;
 import com.mint.fiestapp.views.fotos.IFotosActivity;
 
 import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -91,6 +92,13 @@ public class FotosPresenter implements IFotosPresenter, FotosModel.IFotosModelCa
             }
             adapterFotos.addDatos(modelo);
         }
+    }
+
+    @Override
+    public void removeFotos(){
+        activity.setKeyUltimaFoto("");
+        adapterFotos = new FotosAdapter(new ArrayList<FotoModel>(), contexto, this);
+        activity.mostrarFotos(adapterFotos);
     }
 
     @Override

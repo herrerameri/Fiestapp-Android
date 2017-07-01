@@ -49,7 +49,7 @@ public class FotosAdapter extends RecyclerView.Adapter<FotosAdapter.FotoViewHold
         @BindView(R.id.imgReaccion) ImageView imgReaccion;
         @BindView(R.id.imgCompartir) ImageView imgCompartir;
         @BindView(R.id.texNombreUsuario) CustomTextView texNombreUsuario;
-        @BindView(R.id.texDescripcion) ExpandibleTextView texDescripcion;
+        @BindView(R.id.texDescripcion) CustomTextView texDescripcion;
         @BindView(R.id.texReacciones) CustomTextView texReacciones;
         @BindView(R.id.texDetalle) CustomTextView texDetalle;
 
@@ -100,7 +100,7 @@ public class FotosAdapter extends RecyclerView.Adapter<FotosAdapter.FotoViewHold
         view.imgReaccion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            listener.onReaccionClick(item);
+                listener.onReaccionClick(item);
             }
         });
         view.imgCompartir.setOnClickListener(new View.OnClickListener() {
@@ -138,10 +138,10 @@ public class FotosAdapter extends RecyclerView.Adapter<FotosAdapter.FotoViewHold
                     datos.get(i).Reacciones = new HashMap<>();
                 }
                 datos.get(i).Reacciones.putAll(nuevaReaccion);
+                notifyItemChanged(i);
                 break;
             }
         }
-        notifyDataSetChanged();
     }
 
     public void removeReaccionFoto(String keyFoto, String keyReaccion){
@@ -151,10 +151,10 @@ public class FotosAdapter extends RecyclerView.Adapter<FotosAdapter.FotoViewHold
                 if(datos.get(i).Reacciones != null){
                     datos.get(i).Reacciones.remove(keyReaccion);
                 }
+                notifyItemChanged(i);
                 break;
             }
         }
-        notifyDataSetChanged();
     }
 
     private Uri getLocalBitmapUri(ImageView imageView) {
