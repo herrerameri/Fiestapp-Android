@@ -1,6 +1,7 @@
 package com.mint.fiestapp.views.fiesta;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -11,6 +12,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -49,7 +51,7 @@ public class FiestaActivity extends BaseActivity implements IFiestaActivity, OnM
     @BindView(R.id.texTitulo) TextView texTitulo;
     @BindView(R.id.texDescripcion) TextView texDescripcion;
     @BindView(R.id.texCantidadInvitados) TextView texCantidadInvitados;
-    @BindView(R.id.texCantidadFotos) TextView texCantidadFotos;
+    @BindView(R.id.texTipo) TextView texTipo;
     @BindView(R.id.texCantidadDias) TextView texCantidadDias;
     @BindView(R.id.texFecha) TextView texFecha;
     @BindView(R.id.texHora) TextView texHora;
@@ -96,7 +98,7 @@ public class FiestaActivity extends BaseActivity implements IFiestaActivity, OnM
         texTitulo.setText(presenter.getTitulo());
         texDescripcion.setText(presenter.getDescripcion());
         texCantidadDias.setText(presenter.getCantidadDias());
-        texCantidadFotos.setText(presenter.getCantidadFotos());
+        texTipo.setText(presenter.getTipoFiesta());
         texCantidadInvitados.setText(presenter.getCantidadInvitados());
         texFecha.setText(presenter.getFecha());
         texHora.setText(presenter.getHora());
@@ -167,8 +169,18 @@ public class FiestaActivity extends BaseActivity implements IFiestaActivity, OnM
                     }
                 });
 
-        AlertDialog alertDialog = alertDialogBuilder.create();
+        final AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.setOnKeyListener(new Dialog.OnKeyListener() {
 
+            @Override
+            public boolean onKey(DialogInterface arg0, int keyCode,
+                                 KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
+                    alertDialog.dismiss();
+                }
+                return true;
+            }
+        });
         alertDialog.show();
     }
 

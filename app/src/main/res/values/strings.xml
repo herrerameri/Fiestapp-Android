@@ -18,7 +18,7 @@
     <!-- FIESTA -->
     <string name="dias_faltantes">DÍAS RESTANTES</string>
     <string name="invitados">INVITADOS</string>
-    <string name="fotos">FOTOS</string>
+    <string name="tipo_fiesta">TIPO DE FIESTA</string>
     <string name="mas_info">+ INFO</string>
     <string name="ver_galeria">GALERÍA</string>
     <string name="subir_foto">SUBIR FOTO</string>

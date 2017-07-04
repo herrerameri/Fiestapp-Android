@@ -94,8 +94,8 @@ public class FiestaPresenter implements IFiestaPresenter, FotosModel.IFotosModel
     }
 
     @Override
-    public String getCantidadFotos() {
-        return "10";
+    public String getTipoFiesta(){
+        return model.Tipo;
     }
 
     @Override
@@ -124,7 +124,7 @@ public class FiestaPresenter implements IFiestaPresenter, FotosModel.IFotosModel
             case ASISTENCIA:
             case GALERIA:
                 viewFotos = new FotosView(this);
-                fotosModel.obtenerFotos(8, "", model.key);
+                fotosModel.obtenerFotosConectado(8, model.key);
                 return viewFotos.getLayout(contexto);
             case MENU:
             case MEGUSTAS:

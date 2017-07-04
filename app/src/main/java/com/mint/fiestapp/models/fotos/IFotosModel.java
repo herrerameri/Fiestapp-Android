@@ -8,6 +8,7 @@ import com.mint.fiestapp.presenters.IPresenter;
 
 public interface IFotosModel extends IModel {
     void obtenerFotos(int cantidad, String keyUltimaFoto, String keyFiesta);
+    void obtenerFotosConectado(int cantidad, String keyFiesta);
     void agregarReaccion(String keyFiesta, String keyFoto, String idUsuario);
     void quitarReaccion(String keyFiesta, String keyFoto, String keyReaccion);
 }

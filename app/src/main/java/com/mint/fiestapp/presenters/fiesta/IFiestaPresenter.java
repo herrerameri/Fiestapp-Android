@@ -19,7 +19,7 @@ public interface IFiestaPresenter extends IPresenter {
 
     String getTitulo();
     String getDescripcion();
-    String getCantidadFotos();
+    String getTipoFiesta();
     String getCantidadInvitados();
     String getCantidadDias();
     String getFoto();

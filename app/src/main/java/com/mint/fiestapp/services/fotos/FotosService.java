@@ -21,12 +21,41 @@ public class FotosService extends Servicios implements IFotosService {
         void callbackObtenerFotos(RespuestaLista<FotoModel> respuesta);
         void callbackAgregarReaccion(String keyFoto, Respuesta<HashMap<String, UsuarioModel>> respuesta);
         void callbackQuitarReaccion(String keyFoto, Respuesta<String> respuesta);
+        void callbackObtenerFotosConectado(RespuestaLista<FotoModel> respuesta);
     }
 
     IFotosServiceCallback listener;
 
     public FotosService(IFotosServiceCallback listener){
         this.listener = listener;
+    }
+
+    @Override
+    public void obtenerFotosConectado(int cantidad, String keyFiesta){
+        fotosReference.child(keyFiesta).orderByChild("FechaHora").limitToLast(cantidad).addValueEventListener(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        List<FotoModel> fotos = new ArrayList<>();
+                        for (DataSnapshot snapshot: dataSnapshot.getChildren()){
+                            FotoModel foto = snapshot.getValue(FotoModel.class);
+                            fotos.add(foto);
+                        }
+                        RespuestaLista<FotoModel> respuesta = new RespuestaLista<>();
+                        respuesta.Exito = true;
+                        Collections.reverse(fotos);
+                        respuesta.Modelo = fotos;
+                        listener.callbackObtenerFotosConectado(respuesta);
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        RespuestaLista<FotoModel> respuesta = new RespuestaLista<>();
+                        respuesta.Exito = false;
+                        respuesta.Mensaje = "Ocurrió un error al conectar con el servidor.";
+                        listener.callbackObtenerFotosConectado(respuesta);
+                    }
+                });
     }
 
     @Override

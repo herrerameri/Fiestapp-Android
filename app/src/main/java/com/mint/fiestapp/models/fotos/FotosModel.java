@@ -41,6 +41,11 @@ public class FotosModel implements IFotosModel, FotosService.IFotosServiceCallba
     }
 
     @Override
+    public void obtenerFotosConectado(int cantidad, String keyFiesta) {
+        services.obtenerFotosConectado(cantidad, keyFiesta);
+    }
+
+    @Override
     public void agregarReaccion(String keyFiesta, String keyFoto, String idUsuario){
         services.agregarReaccion(keyFiesta, keyFoto, idUsuario);
     }
@@ -64,6 +69,13 @@ public class FotosModel implements IFotosModel, FotosService.IFotosServiceCallba
         }
         else{
             listener.mostrarError(result.Mensaje);
+        }
+    }
+
+    @Override
+    public void callbackObtenerFotosConectado(RespuestaLista<FotoModel> result) {
+        if(result.Exito){
+            listener.mostrarFotos(result.Modelo);
         }
     }
 

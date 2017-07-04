@@ -20,6 +20,7 @@ public class FiestaModel implements Serializable{
     public String Detalle;
     public String Codigo;
     public String FechaHora;
+    public String Tipo;
     public String Imagen;
     public UbicacionModel Ubicacion;
     public String CantidadInvitados;

@@ -130,11 +130,11 @@
                     android:orientation="vertical">
 
                     <com.mint.fiestapp.views.custom.CustomTextView
-                        android:id="@+id/texCantidadFotos"
+                        android:id="@+id/texTipo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="324"
+                        android:text="Publica"
                         android:textColor="@color/titles"
                         android:textSize="22sp"
                         customAttrs:customFont="UBUNTU_BOLD" />
@@ -143,7 +143,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="@string/fotos"
+                        android:text="@string/tipo_fiesta"
                         android:textColor="@color/subtitles"
                         android:textSize="11sp"
                         customAttrs:customFont="UBUNTU_REGULAR" />

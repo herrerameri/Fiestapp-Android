@@ -1,98 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:customAttrs="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:customAttrs="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="15dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
-       <ImageView
-           android:id="@+id/imgFoto"
-           android:adjustViewBounds="true"
-           android:src="@drawable/bonete"
-           android:scaleType="centerCrop"
-           android:layout_height="400dp"
-           android:layout_width="match_parent"/>
-
-        <LinearLayout
-            android:layout_alignBottom="@id/imgFoto"
+    <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:padding="3dp"
-            android:weightSum="1"
-            android:orientation="horizontal"
-            android:background="@color/white">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/imgUsuario"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.2"
-                android:src="@drawable/bonete" />
+           <ImageView
+               android:id="@+id/imgFoto"
+               android:adjustViewBounds="true"
+               android:src="@drawable/bonete"
+               android:scaleType="centerCrop"
+               android:layout_height="400dp"
+               android:layout_width="match_parent"/>
 
             <LinearLayout
-                android:layout_width="0dp"
-                android:orientation="vertical"
-                android:layout_weight="0.5"
-                android:gravity="center_vertical"
-                android:layout_height="match_parent">
-
-                <com.mint.fiestapp.views.custom.CustomTextView
-                    android:id="@+id/texNombreUsuario"
-                    android:layout_width="wrap_content"
-                    customAttrs:customFont="UBUNTU_BOLD"
-                    android:textColor="@color/titles"
-                    android:layout_height="wrap_content"
-                    android:textSize="12sp"
-                    android:text=""/>
-
-                <com.mint.fiestapp.views.custom.CustomTextView
-                    android:id="@+id/texDescripcion"
-                    android:layout_width="wrap_content"
-                    customAttrs:customFont="UBUNTU_NORMAL"
-                    android:textColor="@color/titles"
-                    android:layout_height="wrap_content"
-                    android:textSize="12sp"
-                    android:text=""/>
-
-                <com.mint.fiestapp.views.custom.CustomTextView
-                    android:id="@+id/texDetalle"
-                    android:layout_width="wrap_content"
-                    customAttrs:customFont="UBUNTU_REGULAR"
-                    android:textColor="@color/titles"
-                    android:textSize="10sp"
-                    android:layout_height="wrap_content"
-                    android:text=""/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
+                android:layout_alignBottom="@id/imgFoto"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:padding="3dp"
+                android:weightSum="1"
                 android:orientation="horizontal"
-                android:layout_weight="0.3"
-                android:gravity="center_vertical"
-                android:layout_height="match_parent">
+                android:background="@color/white">
 
                 <ImageView
-                    android:id="@+id/imgReaccion"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:src="@mipmap/ic_favorite" />
-
-                <com.mint.fiestapp.views.custom.CustomTextView
-                    android:id="@+id/texReacciones"
-                    android:layout_width="wrap_content"
-                    customAttrs:customFont="UBUNTU_REGULAR"
-                    android:textColor="@color/titles"
-                    android:textSize="12sp"
+                    android:id="@+id/imgUsuario"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text=""/>
+                    android:layout_weight="0.2"
+                    android:src="@drawable/bonete" />
 
-                <ImageView
-                    android:id="@+id/imgCompartir"
-                    android:tint="@color/titles"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:src="@mipmap/ic_share" />
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:orientation="vertical"
+                    android:layout_weight="0.5"
+                    android:gravity="center_vertical"
+                    android:layout_height="match_parent">
+
+                    <com.mint.fiestapp.views.custom.CustomTextView
+                        android:id="@+id/texNombreUsuario"
+                        android:layout_width="wrap_content"
+                        customAttrs:customFont="UBUNTU_BOLD"
+                        android:textColor="@color/titles"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:text=""/>
+
+                    <com.mint.fiestapp.views.custom.CustomTextView
+                        android:id="@+id/texDescripcion"
+                        android:layout_width="wrap_content"
+                        customAttrs:customFont="UBUNTU_NORMAL"
+                        android:textColor="@color/titles"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:text=""/>
+
+                    <com.mint.fiestapp.views.custom.CustomTextView
+                        android:id="@+id/texDetalle"
+                        android:layout_width="wrap_content"
+                        customAttrs:customFont="UBUNTU_REGULAR"
+                        android:textColor="@color/titles"
+                        android:textSize="10sp"
+                        android:layout_height="wrap_content"
+                        android:text=""/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:orientation="horizontal"
+                    android:layout_weight="0.3"
+                    android:gravity="center_vertical"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/imgReaccion"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="@mipmap/ic_favorite" />
+
+                    <com.mint.fiestapp.views.custom.CustomTextView
+                        android:id="@+id/texReacciones"
+                        android:layout_width="wrap_content"
+                        customAttrs:customFont="UBUNTU_REGULAR"
+                        android:textColor="@color/titles"
+                        android:textSize="12sp"
+                        android:layout_height="wrap_content"
+                        android:text=""/>
+
+                    <ImageView
+                        android:id="@+id/imgCompartir"
+                        android:tint="@color/titles"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="@mipmap/ic_share" />
+                </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
-</LinearLayout>
+    </LinearLayout>
+</android.support.v7.widget.CardView>

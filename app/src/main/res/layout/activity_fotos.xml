@@ -1,34 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.SwipeRefreshLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/swpRefresh"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/linActionBar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="80dp"
+        android:background="@drawable/gradiente"
+        android:gravity="center">
 
+        <com.mint.fiestapp.views.custom.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/galeria"
+            android:textColor="@color/white"
+            android:textSize="@dimen/fontsize_title"
+            app:customFont="UBUNTU_NORMAL" />
+    </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/linActionBar"
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:background="@drawable/gradiente"
-            android:gravity="center">
-
-            <com.mint.fiestapp.views.custom.CustomTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/galeria"
-                android:textColor="@color/white"
-                android:textSize="@dimen/fontsize_title"
-                app:customFont="UBUNTU_NORMAL" />
-        </LinearLayout>
-
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swpRefresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
         <android.support.design.widget.CoordinatorLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -79,5 +76,5 @@
                 app:pressedTranslationZ="12dp" />
 
         </android.support.design.widget.CoordinatorLayout>
-    </LinearLayout>
-</android.support.v4.widget.SwipeRefreshLayout>
+    </android.support.v4.widget.SwipeRefreshLayout>
+</LinearLayout>
