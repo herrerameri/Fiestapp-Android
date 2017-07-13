@@ -1,6 +1,7 @@
 package com.mint.fiestapp.presenters.fotos;
 
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -20,6 +21,7 @@ import com.mint.fiestapp.models.fotos.ISubirFotosModel;
 import com.mint.fiestapp.models.fotos.SubirFotosModel;
 import com.mint.fiestapp.services.Servicios;
 import com.mint.fiestapp.views.IActivity;
+import com.mint.fiestapp.views.fotos.FotosActivity;
 import com.mint.fiestapp.views.fotos.ISubirFotosActivity;
 import com.mint.fiestapp.views.fotos.SubirFotosActivity;
 
@@ -97,6 +99,7 @@ public class SubirFotosPresenter implements ISubirFotosPresenter, SubirFotosMode
 
     private void mostrarNotificacionProgreso(){
         activity.mostrarProgreso();
+
         mNotifyManager =
                 (NotificationManager) contexto.getSystemService(Context.NOTIFICATION_SERVICE);
         mBuilder = new NotificationCompat.Builder(contexto);

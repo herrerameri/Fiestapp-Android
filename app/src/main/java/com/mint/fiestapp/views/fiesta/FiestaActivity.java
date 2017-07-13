@@ -1,17 +1,24 @@
 package com.mint.fiestapp.views.fiesta;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -28,6 +35,7 @@ import com.mint.fiestapp.comun.IntentKeys;
 import com.mint.fiestapp.presenters.IPresenter;
 import com.mint.fiestapp.presenters.fiesta.IFiestaPresenter;
 import com.mint.fiestapp.views.BaseActivity;
+import com.mint.fiestapp.views.MainActivity;
 import com.mint.fiestapp.views.custom.ImageCircleTransform;
 import com.squareup.picasso.Picasso;
 
@@ -61,6 +69,8 @@ public class FiestaActivity extends BaseActivity implements IFiestaActivity, OnM
     static SupportMapFragment frgMapUbicacionFiesta;
     private static final int REQUEST_FOTO_CAMARA = 111;
     private static final int REQUEST_FOTO_GALERIA = 222;
+    private static final int PERMISO_GALERIA = 1000;
+    private static final int PERMISO_CAMARA = 2000;
     Uri imageUri;
 
     @Override
@@ -147,23 +157,38 @@ public class FiestaActivity extends BaseActivity implements IFiestaActivity, OnM
                 .setCancelable(false)
                 .setPositiveButton("Cámara",new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog,int id) {
+                        if (ContextCompat.checkSelfPermission(FiestaActivity.this,
+                                Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                                != PackageManager.PERMISSION_GRANTED) {
 
-                        ContentValues values = new ContentValues();
-                        values.put(MediaStore.Images.Media.TITLE, "Fiestapp");
-                        imageUri = getContentResolver().insert(
-                                MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-                        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                        intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-                        startActivityForResult(intent, REQUEST_FOTO_CAMARA);
-
+                            if (!ActivityCompat.shouldShowRequestPermissionRationale(FiestaActivity.this,
+                                    Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                                ActivityCompat.requestPermissions(FiestaActivity.this,
+                                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                                        PERMISO_CAMARA);
+                            }
+                        }
+                        else{
+                            intentCamaraFotos();
+                        }
                         dialog.cancel();
                     }
                 })
                 .setNegativeButton("Galería",new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog,int id) {
-                        Intent intentNuevaFoto = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                        if (intentNuevaFoto.resolveActivity(getPackageManager()) != null) {
-                            startActivityForResult(intentNuevaFoto, REQUEST_FOTO_GALERIA);
+                        if (ContextCompat.checkSelfPermission(FiestaActivity.this,
+                                Manifest.permission.READ_EXTERNAL_STORAGE)
+                                != PackageManager.PERMISSION_GRANTED) {
+
+                            if (!ActivityCompat.shouldShowRequestPermissionRationale(FiestaActivity.this,
+                                    Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                                ActivityCompat.requestPermissions(FiestaActivity.this,
+                                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                                        PERMISO_GALERIA);
+                            }
+                        }
+                        else{
+                            intentGaleriaFotos();
                         }
                         dialog.cancel();
                     }
@@ -184,16 +209,53 @@ public class FiestaActivity extends BaseActivity implements IFiestaActivity, OnM
         alertDialog.show();
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+    String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case PERMISO_GALERIA: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    intentGaleriaFotos();
+
+                }
+                return;
+            }
+            case PERMISO_CAMARA: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    intentCamaraFotos();
+                }
+                return;
+            }
+            // other 'case' lines to check for other
+            // permissions this app might request
+        }
+    }
+
+    private void intentGaleriaFotos(){
+        Intent intentNuevaFoto = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        if (intentNuevaFoto.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(intentNuevaFoto, REQUEST_FOTO_GALERIA);
+        }
+    }
+
+    private void intentCamaraFotos(){
+        ContentValues values = new ContentValues();
+        values.put(MediaStore.Images.Media.TITLE, "Fiestapp");
+        imageUri = getContentResolver().insert(
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+        startActivityForResult(intent, REQUEST_FOTO_CAMARA);
+    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_FOTO_CAMARA && resultCode == RESULT_OK) {
             try {
-                Bitmap thumbnail = MediaStore.Images.Media.getBitmap(
-                        getContentResolver(), imageUri);
-                ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                thumbnail.compress(Bitmap.CompressFormat.JPEG, 20, stream);
-                byte[] byteArray = stream.toByteArray();
+                Bitmap imagenBitmap = BitmapFactory.decodeFile(getRealPathFromURI(imageUri));
+                ByteArrayOutputStream out = new ByteArrayOutputStream();
+                imagenBitmap.compress(Bitmap.CompressFormat.JPEG, 10, out);
+                byte[] byteArray = out.toByteArray();
                 presenter.subirFotos(byteArray);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -201,19 +263,31 @@ public class FiestaActivity extends BaseActivity implements IFiestaActivity, OnM
         }
         if (requestCode == REQUEST_FOTO_GALERIA && resultCode == RESULT_OK && null != data) {
             try{
-                final Uri imageUri = data.getData();
-                final InputStream imageStream = getContentResolver().openInputStream(imageUri);
-                Bitmap bmp = BitmapFactory.decodeStream(imageStream);
-                ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                bmp.compress(Bitmap.CompressFormat.JPEG, 20, stream);
-                byte[] byteArray = stream.toByteArray();
+                Bitmap imagenBitmap = BitmapFactory.decodeFile(getRealPathFromURI(data.getData()));
+                ByteArrayOutputStream out = new ByteArrayOutputStream();
+                imagenBitmap.compress(Bitmap.CompressFormat.JPEG, 15, out);
+                byte[] byteArray = out.toByteArray();
                 presenter.subirFotos(byteArray);
-            } catch (IOException e) {
+
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
     }
 
+    public String getRealPathFromURI(Uri uri){
+        String filePath = "";
+        String[] filePahColumn = {MediaStore.Images.Media.DATA};
+        Cursor cursor = getContentResolver().query(uri, filePahColumn, null, null, null);
+        if (cursor != null) {
+            if(cursor.moveToFirst()){
+                int columnIndex = cursor.getColumnIndex(filePahColumn[0]);
+                filePath = cursor.getString(columnIndex);
+            }
+            cursor.close();
+        }
+        return filePath;
+    }
     @Override
     public void mostrarProgreso(){}
 

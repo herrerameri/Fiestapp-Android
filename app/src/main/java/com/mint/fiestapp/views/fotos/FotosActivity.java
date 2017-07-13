@@ -1,7 +1,9 @@
 package com.mint.fiestapp.views.fotos;
 
+import android.Manifest;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -10,11 +12,14 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -62,6 +67,8 @@ public class FotosActivity extends BaseActivity implements IFotosActivity {
     private String keyUltimaFoto = "";
     private static final int REQUEST_FOTO_CAMARA = 111;
     private static final int REQUEST_FOTO_GALERIA = 222;
+    private static final int PERMISO_GALERIA = 1000;
+    private static final int PERMISO_CAMARA = 2000;
     private Uri imageUri;
 
     @Override
@@ -116,6 +123,68 @@ public class FotosActivity extends BaseActivity implements IFotosActivity {
 
     @OnClick(R.id.fabCamara)
     public void nuevaFotoCamara(){
+        if (ContextCompat.checkSelfPermission(FotosActivity.this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            if (!ActivityCompat.shouldShowRequestPermissionRationale(FotosActivity.this,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                ActivityCompat.requestPermissions(FotosActivity.this,
+                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                        PERMISO_CAMARA);
+            }
+        }
+        else{
+            intentCamaraFotos();
+        }
+    }
+
+    @OnClick(R.id.fabGaleria)
+    public void nuevaFotoGaleria(){
+        if (ContextCompat.checkSelfPermission(FotosActivity.this,
+                Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            if (!ActivityCompat.shouldShowRequestPermissionRationale(FotosActivity.this,
+                    Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                ActivityCompat.requestPermissions(FotosActivity.this,
+                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                        PERMISO_GALERIA);
+            }
+        }
+        else{
+            intentGaleriaFotos();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case PERMISO_GALERIA: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    intentGaleriaFotos();
+                }
+                return;
+            }
+            case PERMISO_CAMARA: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    intentCamaraFotos();
+                }
+                return;
+            }
+            // other 'case' lines to check for other
+            // permissions this app might request
+        }
+    }
+
+    private void intentGaleriaFotos(){
+        Intent intentNuevaFoto = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        if (intentNuevaFoto.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(intentNuevaFoto, REQUEST_FOTO_GALERIA);
+        }
+    }
+
+    private void intentCamaraFotos(){
         ContentValues values = new ContentValues();
         values.put(MediaStore.Images.Media.TITLE, "Fiestapp");
         imageUri = getContentResolver().insert(
@@ -124,39 +193,45 @@ public class FotosActivity extends BaseActivity implements IFotosActivity {
         intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
         startActivityForResult(intent, REQUEST_FOTO_CAMARA);
     }
-
-    @OnClick(R.id.fabGaleria)
-    public void nuevaFotoGaleria(){
-        Intent intentNuevaFoto = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        if (intentNuevaFoto.resolveActivity(getPackageManager()) != null) {
-            startActivityForResult(intentNuevaFoto, REQUEST_FOTO_GALERIA);
+    public String getRealPathFromURI(Uri uri){
+        String filePath = "";
+        String[] filePahColumn = {MediaStore.Images.Media.DATA};
+        Cursor cursor = getContentResolver().query(uri, filePahColumn, null, null, null);
+        if (cursor != null) {
+            if(cursor.moveToFirst()){
+                int columnIndex = cursor.getColumnIndex(filePahColumn[0]);
+                filePath = cursor.getString(columnIndex);
+            }
+            cursor.close();
         }
+        return filePath;
     }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_FOTO_CAMARA && resultCode == RESULT_OK ) {
             try {
-                Bitmap thumbnail = MediaStore.Images.Media.getBitmap(
-                        getContentResolver(), imageUri);
-                ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                thumbnail.compress(Bitmap.CompressFormat.JPEG, 20, stream);
-                byte[] byteArray = stream.toByteArray();
+                Bitmap imagenBitmap = BitmapFactory.decodeFile(getRealPathFromURI(imageUri));
+                ByteArrayOutputStream out = new ByteArrayOutputStream();
+                imagenBitmap.compress(Bitmap.CompressFormat.JPEG, 10, out);
+                byte[] byteArray = out.toByteArray();
                 presenter.subirFotos(byteArray);
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
         if (requestCode == REQUEST_FOTO_GALERIA && resultCode == RESULT_OK && null != data) {
             try{
-                final Uri imageUri = data.getData();
-                final InputStream imageStream = getContentResolver().openInputStream(imageUri);
-                Bitmap bmp = BitmapFactory.decodeStream(imageStream);
-                ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                bmp.compress(Bitmap.CompressFormat.JPEG, 20, stream);
-                byte[] byteArray = stream.toByteArray();
+                BitmapFactory.Options options = new BitmapFactory.Options();
+                Bitmap imagenBitmap = BitmapFactory.decodeFile(getRealPathFromURI(data.getData()));
+
+                ByteArrayOutputStream out = new ByteArrayOutputStream();
+                imagenBitmap.compress(Bitmap.CompressFormat.JPEG, 15, out);
+
+                byte[] byteArray = out.toByteArray();
                 presenter.subirFotos(byteArray);
-            } catch (IOException e) {
+
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
